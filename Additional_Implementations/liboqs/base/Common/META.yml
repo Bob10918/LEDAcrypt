@@ -1,0 +1,20 @@
+name: LEDAcrypt
+type: kem
+claimed-nist-level: GENERATOR_NIST_LEVEL
+claimed-security: GENERATOR_CLAIMED_SECURITY
+length-public-key: GENERATOR_CRYPTO_PUBLICKEYBYTES
+length-secret-key: GENERATOR_CRYPTO_SECRETKEYBYTES
+length-ciphertext: GENERATOR_CRYPTO_CIPHERTEXTBYTES
+length-shared-secret: GENERATOR_CRYPTO_BYTES
+nistkat-sha256: GENERATOR_NISTKAT_SHA256
+principal-submitters:
+  - Marco Baldi
+  - Alessandro Barenghi
+  - Franco Chiaraluce
+  - Gerardo Pelosi
+  - Paolo Santini
+auxiliary-submitters:
+  - Emanuele Pisano
+implementations:
+  - name: clean
+    version: 1
