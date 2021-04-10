@@ -75,7 +75,7 @@ for param in params:
 
     # copy over oqs header file
     shutil.copyfile(f"base/ledacrypt.c", f"{CLEAN_TARGET_FOLDER}/kem_{parameterSet}.c")
-    cmd = f"sed -i 's/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g' {CLEAN_TARGET_FOLDER}/kem_{parameterSet}.c"
+    cmd = f"sed -i 's/OQS_NAMESPACE/{nmspc}/g; s/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g' {CLEAN_TARGET_FOLDER}/kem_{parameterSet}.c"
     subprocess.call(cmd, shell=True)
 
 # copy main header file and cmake
