@@ -2,42 +2,13 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
+from params import params
 
 
-CLEAN_TARGET_FOLDER = "./kem/ledacrypt"
+TARGET_FOLDER = "./kem/ledacrypt"
 
-LEDACRYPT_SOURCE_FOLDERS = [
-    'base/Common',
-    'base/KEM'
-]
-
-LEDACRYPT_CPA_SOURCE_FOLDERS = [
-    'base/Common',
-    'base/KEM-CPA'
-]
-
-params = [
-    {'name': 'ledacrypt_23371',
-     'impl': 'clean',
-     'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=0'],
-     'undef': [],
-     'target': CLEAN_TARGET_FOLDER,
-     'src_folders': LEDACRYPT_SOURCE_FOLDERS,
-     'values': {
-         'GENERATOR_CRYPTO_RANDOMBYTES': '24',
-         'GENERATOR_CRYPTO_SECRETKEYBYTES' : '50',
-         'GENERATOR_CRYPTO_PUBLICKEYBYTES' : '2928',
-         'GENERATOR_CRYPTO_BYTES' : '32',
-         'GENERATOR_CRYPTO_CIPHERTEXTBYTES' : '2952',
-         'GENERATOR_NISTKAT_SHA256' : 'c0b5a0c5ea96c69f172e5362bdd95a82e70cdec78c3b501b459d355717a30b86',
-         'GENERATOR_NIST_LEVEL' : '1',
-         'GENERATOR_CLAIMED_SECURITY' : 'IND-CCA2'
-     }
-    }
-]
 
 for param in params:
-    TARGET_FOLDER = param['target']
     parameterSet = param['name']
     pqcleanDir = f"{TARGET_FOLDER}/{parameterSet}_{param['impl']}"
 
@@ -74,13 +45,13 @@ for param in params:
 
 
     # copy over oqs header file
-    shutil.copyfile(f"base/ledacrypt.c", f"{CLEAN_TARGET_FOLDER}/kem_{parameterSet}.c")
-    cmd = f"sed -i 's/OQS_NAMESPACE/{nmspc}/g; s/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g' {CLEAN_TARGET_FOLDER}/kem_{parameterSet}.c"
+    shutil.copyfile(f"base/ledacrypt.c", f"{TARGET_FOLDER}/kem_{parameterSet}.c")
+    cmd = f"sed -i 's/OQS_NAMESPACE/{nmspc}/g; s/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g' {TARGET_FOLDER}/kem_{parameterSet}.c"
     subprocess.call(cmd, shell=True)
 
 # copy main header file and cmake
-shutil.copyfile(f"base/kem_ledacrypt.h", f"{CLEAN_TARGET_FOLDER}/kem_ledacrypt.h")
-shutil.copyfile(f"base/CMakeLists.txt", f"{CLEAN_TARGET_FOLDER}/CMakeLists.txt")
+shutil.copyfile(f"base/kem_ledacrypt.h", f"{TARGET_FOLDER}/kem_ledacrypt.h")
+shutil.copyfile(f"base/CMakeLists.txt", f"{TARGET_FOLDER}/CMakeLists.txt")
 
     # run astyle to fix formatting due to namespace
     #cmd = f"astyle --project {pqcleanDir}/*.[ch]"
