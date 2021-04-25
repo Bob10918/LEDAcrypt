@@ -13,14 +13,14 @@
 extern int OQS_NAMESPACE_thresholds[2];
 /*----------------------------------------------------------------------------*/
 static
-int decrypt_niederreiter(DIGIT *err,            // N0 circ poly
+int decrypt_niederreiter(DIGIT err[],            // N0 circ poly
                          const privateKeyNiederreiter_t *const sk,
-                         const DIGIT *syndrome  // 1 circ poly
+                         const DIGIT syndrome[]  // 1 circ poly
                         )
 {
    AES_XOF_struct niederreiter_decrypt_expander;
     OQS_NAMESPACE_seedexpander_from_trng(&niederreiter_decrypt_expander,
-                                                        sk->prng_seed);
+                                         sk->prng_seed);
    /* rebuild secret key values */
    POSITION_T HPosOnes[N0][V];
 
@@ -39,13 +39,13 @@ int decrypt_niederreiter(DIGIT *err,            // N0 circ poly
    int decryptOk = 0;
    DIGIT err_computed[N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B] = {0};
     OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(privateSyndrome,
-                                                              syndrome,
-                                                              HtrPosOnes[N0 - 1],
-                                                              V);
+                                               syndrome,
+                                               HtrPosOnes[N0-1],
+                                               V);
 
    decryptOk = OQS_NAMESPACE_bf_decoding(err_computed,
-                                                        (const POSITION_T (*)[V]) HtrPosOnes,
-                                                        privateSyndrome);
+                                         (const POSITION_T (*)[V]) HtrPosOnes,
+                                         privateSyndrome);
    int err_weight = 0;
    for (int i =0 ; i < N0; i++) {
       err_weight += population_count(err_computed+(NUM_DIGITS_GF2X_ELEMENT*i));
@@ -76,14 +76,14 @@ int decrypt_niederreiter(DIGIT *err,            // N0 circ poly
 /*----------------------------------------------------------------------------*/
 
 void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
-                                                               const unsigned char *const ct,
-                                                               const privateKeyNiederreiter_t *const sk)
+                                                const unsigned char *const ct,
+                                                const privateKeyNiederreiter_t *const sk)
 {
    DIGIT decoded_error_vector[N0*NUM_DIGITS_GF2X_ELEMENT];
 
    int decode_ok = decrypt_niederreiter(decoded_error_vector,
                                         sk,
-                                        (DIGIT *) ct);
+                                        (DIGIT *)ct);
    // the masked seed is appended to the syndrome (ct) by the encryptor ...
    // this call to decrypt_niederreiter(....) is ok!
 
@@ -126,7 +126,7 @@ void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
    AES_XOF_struct hashedAndTruncaedSeed_expander;
    memset(&hashedAndTruncaedSeed_expander, 0x00, sizeof(AES_XOF_struct));
     OQS_NAMESPACE_seedexpander_from_trng(&hashedAndTruncaedSeed_expander,
-                                                        hashed_decoded_seed);
+                                         hashed_decoded_seed);
 
    POSITION_T reconstructed_errorPos[NUM_ERRORS_T];
     OQS_NAMESPACE_rand_error_pos(reconstructed_errorPos, &hashedAndTruncaedSeed_expander);
@@ -159,7 +159,7 @@ void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
 
    HASH_FUNCTION((uint8_t *) ss,
                  (const uint8_t *) ss_input,       // input
-                 2*TRNG_BYTE_LENGTH                // input Length
+                 2*TRNG_BYTE_LENGTH               // input Length
                  );
 
 } // end OQS_NAMESPACE_decrypt_niederreiter_indcca2

@@ -6,9 +6,9 @@
 #define  ITERATIONS_MAX   (2)
 
 int OQS_NAMESPACE_bf_decoding(DIGIT err[],
-                                             const POSITION_T HtrPosOnes[N0][V],
-                                             DIGIT privateSyndrome[]       //  1 polynomial  -- param. in/out
-);
+                              const POSITION_T HtrPosOnes[N0][V],
+                              DIGIT privateSyndrome[]       //  1 polynomial  -- param. in/out
+                              );
 /* OQS_NAMESPACE_thresholds and tbars for imaxin = 0imaxout = 2 CCA ledadecoder */
 #if (CATEGORY == 1) && (N0 == 2) && (DFR_SL_LEVEL == 0)
 #define T_BAR 10

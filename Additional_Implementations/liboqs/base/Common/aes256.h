@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey);
-void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t *rk, int Nr,
-                                                  const uint8_t *pt, uint8_t *ct);
+int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[]);
+void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
+                                   const uint8_t pt[16], uint8_t ct[16]);
 
 #endif

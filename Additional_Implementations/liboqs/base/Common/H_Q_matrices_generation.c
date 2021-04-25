@@ -5,8 +5,8 @@
 /*----------------------------------------------------------------------------*/
 
 void OQS_NAMESPACE_generateHPosOnes(POSITION_T HPosOnes[N0][V],
-                                                   AES_XOF_struct *keys_expander
-)
+                                    AES_XOF_struct *keys_expander
+                                    )
 {
    for (int i = 0; i < N0; i++) {
       /* Generate a random block of Htr */
@@ -17,8 +17,8 @@ void OQS_NAMESPACE_generateHPosOnes(POSITION_T HPosOnes[N0][V],
 } // end generateHtr_HtrPosOnes
 
 void OQS_NAMESPACE_transposeHPosOnes(POSITION_T HtrPosOnes[N0][V], /* output*/
-                                                    POSITION_T const HPosOnes[N0][V]
-)
+                                     POSITION_T const HPosOnes[N0][V]
+                                     )
 {
    for (int i = 0; i < N0; i++) {
       /* Obtain directly the sparse representation of the block of H */

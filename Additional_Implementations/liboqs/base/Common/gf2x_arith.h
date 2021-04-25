@@ -51,8 +51,7 @@
 /*----------------------------------------------------------------------------*/
 
 static inline void gf2x_add(const int nr, DIGIT Res[],
-                            const DIGIT A[], const DIGIT B[]
-                            )
+                            const DIGIT A[], const DIGIT B[])
 {
    for (int i = 0; i < nr; i++)
       Res[i] = A[i] ^ B[i];
@@ -60,16 +59,16 @@ static inline void gf2x_add(const int nr, DIGIT Res[],
 
 /*----------------------------------------------------------------------------*/
 
-void GF2X_MUL(const int nr, DIGIT *Res,
-              const int na, const DIGIT *A,
-              const int nb, const DIGIT *B
+void GF2X_MUL(const int nr, DIGIT Res[],
+              const int na, const DIGIT A[],
+              const int nb, const DIGIT B[]
 );
 
 /* PRE: MAX ALLOWED ROTATION AMOUNT : DIGIT_SIZE_b */
-void OQS_NAMESPACE_right_bit_shift_n(const int length, DIGIT *in, const int amount);
+void OQS_NAMESPACE_right_bit_shift_n(const int length, DIGIT in[], const int amount);
 
 /* PRE: MAX ALLOWED ROTATION AMOUNT : DIGIT_SIZE_b */
-void OQS_NAMESPACE_left_bit_shift_n(const int length, DIGIT *in, const int amount);
+void OQS_NAMESPACE_left_bit_shift_n(const int length, DIGIT in[], const int amount);
 /*----------------------------------------------------------------------------*/
 
 #endif

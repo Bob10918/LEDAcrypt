@@ -10,7 +10,7 @@
  * it in the globally accessible vector*/
 
 int OQS_NAMESPACE_DFR_test(POSITION_T LSparse[N0][V],
-                                          uint8_t *secondIterThreshold)
+                           uint8_t *secondIterThreshold)
 {
 
    POSITION_T LSparse_loc[N0][V];  /* vector of N_0 sparse blocks */
@@ -20,7 +20,7 @@ int OQS_NAMESPACE_DFR_test(POSITION_T LSparse[N0][V],
       for(int j = 0; j < V; j++) {
          LSparse_loc[i][j] = (P-LSparse[i][j]) % P;
       }
-       OQS_NAMESPACE_int32_sort((int32_t *) LSparse_loc[i], V);
+      OQS_NAMESPACE_int32_sort((int32_t *)LSparse_loc[i],V);
    }
    /* Gamma matrix: an N0 x N0 block circulant matrix with block size p
     * gamma[a][b][c] stores the intersection of the first column of the a-th

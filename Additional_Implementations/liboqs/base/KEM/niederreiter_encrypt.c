@@ -28,9 +28,9 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
          }
       }
        OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(saux,
-                                                                 pk->Mtr + i * NUM_DIGITS_GF2X_ELEMENT,
-                                                                 blkErrorPos,
-                                                                 filled);
+                                                  pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
+                                                  blkErrorPos,
+                                                  filled);
       gf2x_mod_add(syndrome, syndrome, saux);
    }  // end for
    gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
@@ -52,7 +52,7 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
    memcpy(ss_input, seed, TRNG_BYTE_LENGTH);
    HASH_FUNCTION((uint8_t *) ss,
                  (const uint8_t *) ss_input, // input
-                 2*TRNG_BYTE_LENGTH                // input Length
+                 2*TRNG_BYTE_LENGTH               // input Length
                  );
 
    // in api.h PQCLEAN_LEDACRYPTXXXX_CLEAN_CRYPTO_CIPHERTEXTBYTES is defined for KEMLT
@@ -77,7 +77,7 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
    AES_XOF_struct hashedAndTruncatedSeed_expander;
    memset(&hashedAndTruncatedSeed_expander, 0x00, sizeof(AES_XOF_struct));
     OQS_NAMESPACE_seedexpander_from_trng(&hashedAndTruncatedSeed_expander,
-                                                        hashedAndTruncatedSeed);
+                                         hashedAndTruncatedSeed);
 
    POSITION_T errorPos[NUM_ERRORS_T];
     OQS_NAMESPACE_rand_error_pos(errorPos, &hashedAndTruncatedSeed_expander);

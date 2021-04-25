@@ -389,7 +389,7 @@ static const uint32_t rcon[] = {
  *
  * @return	the number of rounds for the given cipher key size.
  */
-int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey)
+int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[])
 {
    int i = 0;
    uint32_t temp;
@@ -431,8 +431,8 @@ int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey)
    return 0;
 }
 
-void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t *rk, int Nr,
-                                                  const uint8_t *pt, uint8_t *ct)
+void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
+                                   const uint8_t pt[16], uint8_t ct[16])
 {
    uint32_t s0, s1, s2, s3, t0=0, t1=0, t2=0, t3=0;
 

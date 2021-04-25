@@ -5,7 +5,8 @@ from pathlib import Path
 from params import params
 
 
-TARGET_FOLDER = "./kem/ledacrypt"
+#TARGET_FOLDER = "./kem/ledacrypt"
+TARGET_FOLDER = "/home/bob/liboqs/src/kem/ledacrypt"
 
 
 for param in params:
@@ -33,7 +34,7 @@ for param in params:
             cmd = ("unifdef -m " 
                 + " ".join(["-D"+d for d in param['def']]) + " "
                 + " ".join(['-U'+d for d in param.get('undef', [])])
-                #+ f" -f params/params-{param['name']}.h"
+                + " -DCONSTANT_TIME "
                 + f" {pqcleanDir}/{f}")
             print(cmd)
             subprocess.call(cmd, shell=True)

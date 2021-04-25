@@ -17,7 +17,7 @@ static inline void zeroize( void *v, size_t n )
 /*----------------------------------------------------------------------------*/
 
 void OQS_NAMESPACE_key_gen_niederreiter(publicKeyNiederreiter_t   *const pk,
-                                                       privateKeyNiederreiter_t *const sk)
+                                        privateKeyNiederreiter_t *const sk)
 {
    AES_XOF_struct keys_expander;
    memset(&keys_expander,0x00,sizeof(AES_XOF_struct));
@@ -45,16 +45,16 @@ void OQS_NAMESPACE_key_gen_niederreiter(publicKeyNiederreiter_t   *const pk,
       gf2x_set_coeff(Ln0dense,HPosOnes[N0-1][j],1);
    }
    DIGIT Ln0Inv[NUM_DIGITS_GF2X_ELEMENT] = {0x00};
-    GF2X_DIGIT_MOD_INVERSE(Ln0Inv, Ln0dense);
+   GF2X_DIGIT_MOD_INVERSE(Ln0Inv, Ln0dense);
    for (int i = 0; i < N0-1; i++) {
-       OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(pk->Mtr + i * NUM_DIGITS_GF2X_ELEMENT,
-                                                                 Ln0Inv,
-                                                                 HPosOnes[i],
-                                                                 V);
+       OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
+                                                  Ln0Inv,
+                                                  HPosOnes[i],
+                                                  V);
    }
 
    for (int i = 0; i < N0-1; i++) {
-       OQS_NAMESPACE_gf2x_transpose_in_place(pk->Mtr + i * NUM_DIGITS_GF2X_ELEMENT);
+       OQS_NAMESPACE_gf2x_transpose_in_place(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT);
    }
 } // end OQS_NAMESPACE_key_gen_niederreiter
 

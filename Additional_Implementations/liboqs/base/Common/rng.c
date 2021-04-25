@@ -32,7 +32,7 @@ void OQS_NAMESPACE_initialize_pseudo_random_generator_seed(int seedFixed, char *
    unsigned char pseudo_entropy[48];
    for (int i=0; i< 48; i++) pseudo_entropy[i] = rand() & 0xff;
     OQS_NAMESPACE_randombytes_init(pseudo_entropy,
-                                                  NULL);
+                                   NULL);
 
 
 } // end initilize_pseudo_random_sequence_seed
@@ -86,8 +86,8 @@ OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input, unsigned char *pers
 
 void
 OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
-                                                    unsigned char *Key,
-                                                    unsigned char *Vee)
+                                     unsigned char *Key,
+                                     unsigned char *Vee)
 {
    unsigned char   temp[48];
 
@@ -102,7 +102,7 @@ OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
          }
       }
 
-       OQS_NAMESPACE_AES256_ECB(Key, Vee, temp + 16 * i);
+       OQS_NAMESPACE_AES256_ECB(Key, Vee, temp+16*i);
    }
    if ( provided_data != NULL )
       for (int i=0; i<48; i++)
@@ -114,10 +114,9 @@ OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
 
 
 void OQS_NAMESPACE_deterministic_random_byte_generator(unsigned char *const output,
-                                                                      const unsigned long long output_len,
-                                                                      const unsigned char *const seed,
-                                                                      const unsigned long long seed_length
-                                        )
+                                                       const unsigned long long output_len,
+                                                       const unsigned char *const seed,
+                                                       const unsigned long long seed_length)
 {
    /* DRBG context initialization */
    AES256_CTR_DRBG_struct ctx;
@@ -164,7 +163,7 @@ void OQS_NAMESPACE_deterministic_random_byte_generator(unsigned char *const outp
 } // end OQS_NAMESPACE_deterministic_random_byte_generator
 
 void OQS_NAMESPACE_seedexpander_from_trng(AES_XOF_struct *ctx,
-                                                         const unsigned char *trng_entropy
+                                          const unsigned char *trng_entropy
                             /* TRNG_BYTE_LENGTH wide buffer */)
 {
 
@@ -215,7 +214,7 @@ uint32_t OQS_NAMESPACE_rand_range(const int n, const int logn, AES_XOF_struct *s
 } // end OQS_NAMESPACE_rand_range
 
 void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
-                                                          const unsigned char *trng_entropy
+                                           const unsigned char *trng_entropy
                              /* TRNG_BYTE_LENGTH wide buffer */)
 {
    memset(st, 0x00, sizeof(xof_shake_t));
@@ -245,8 +244,8 @@ void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
 } // end OQS_NAMESPACE_shake_seedexpander_init
 
 void OQS_NAMESPACE_shake_seedexpander_extract(xof_shake_t *st,
-                                                             unsigned char *output,
-                                                             unsigned int outputByteLen)
+                                              unsigned char *output,
+                                              unsigned int outputByteLen)
 {
    int remaining_bytes_to_output = outputByteLen;
    uint32_t outIdx = 0;

@@ -12,9 +12,19 @@
 /* limb size definitions for the multi-precision GF(2^x) library              */
 /*----------------------------------------------------------------------------*/
 
-typedef uint64_t DIGIT;
+#ifndef CPU_WORD_BITS
+typedef size_t DIGIT;
 #define DIGIT_MAX SIZE_MAX
+#else
+// gcc -DCPU_WORD_BITS=64 ...
+#define CAT(a, b, c) PRIMITIVE_CAT(a, b, c)
+#define PRIMITIVE_CAT(a, b, c) a ## b ## c
 
+typedef CAT( uint, CPU_WORD_BITS, _t ) DIGIT;
+typedef CAT( int, CPU_WORD_BITS, _t ) SIGNED_DIGIT;
+
+#define DIGIT_MAX (CAT(UINT, CPU_WORD_BITS, _MAX))
+#endif
 
 #if (DIGIT_MAX == ULLONG_MAX)
 #define DIGIT_IS_ULLONG

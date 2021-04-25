@@ -19,11 +19,12 @@ typedef struct {
 
 void
 OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
-                                                    unsigned char *Key,
-                                                    unsigned char *Vee);
+                                     unsigned char *Key,
+                                     unsigned char *Vee);
 
 void
-OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input, unsigned char *personalization_string);
+OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input,
+                               unsigned char *personalization_string);
 
 
 /******  End of NIST supplied code ****************/
@@ -32,12 +33,12 @@ OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input, unsigned char *pers
 void OQS_NAMESPACE_initialize_pseudo_random_generator_seed(int seedFixed, char *seed);
 
 void OQS_NAMESPACE_deterministic_random_byte_generator(unsigned char *const output,
-                                                                      const unsigned long long output_len,
-                                                                      const unsigned char *const seed,
-                                                                      const unsigned long long seed_length);
+                                                       const unsigned long long output_len,
+                                                       const unsigned char *const seed,
+                                                       const unsigned long long seed_length);
 
 void OQS_NAMESPACE_seedexpander_from_trng(AES_XOF_struct *ctx,
-                                                         const unsigned char *trng_entropy
+                                          const unsigned char *trng_entropy
                             /* TRNG_BYTE_LENGTH wide buffer */);
 
 /* Return a uniform random value in the range 0..n-1 inclusive,
@@ -67,12 +68,12 @@ struct xof_shake {
 
 
 void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
-                                                          const unsigned char *trng_entropy
+                                           const unsigned char *trng_entropy
                              /* TRNG_BYTE_LENGTH wide buffer */);
 
 void OQS_NAMESPACE_shake_seedexpander_extract(xof_shake_t *st,
-                                                             unsigned char *output,
-                                                             unsigned int outputByteLen);
+                                              unsigned char *output,
+                                              unsigned int outputByteLen);
 
 int OQS_NAMESPACE_rand_range_shake(const int n, const int logn, xof_shake_t *st);
 

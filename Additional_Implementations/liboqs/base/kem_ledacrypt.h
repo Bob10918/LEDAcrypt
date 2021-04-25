@@ -73,7 +73,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_16229_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_40787
 #define OQS_KEM_ledacrypt_40787_length_public_key 5104
-#define OQS_KEM_ledacrypt_40787_length_secret_key 50
+#define OQS_KEM_ledacrypt_40787_length_secret_key 66
 #define OQS_KEM_ledacrypt_40787_length_ciphertext 5136
 #define OQS_KEM_ledacrypt_40787_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_40787_new(void);
@@ -84,7 +84,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_40787_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_28411
 #define OQS_KEM_ledacrypt_28411_length_public_key 7104
-#define OQS_KEM_ledacrypt_28411_length_secret_key 50
+#define OQS_KEM_ledacrypt_28411_length_secret_key 66
 #define OQS_KEM_ledacrypt_28411_length_ciphertext 3584
 #define OQS_KEM_ledacrypt_28411_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_28411_new(void);
@@ -95,7 +95,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_28411_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_22901
 #define OQS_KEM_ledacrypt_22901_length_public_key 8592
-#define OQS_KEM_ledacrypt_22901_length_secret_key 50
+#define OQS_KEM_ledacrypt_22901_length_secret_key 66
 #define OQS_KEM_ledacrypt_22901_length_ciphertext 2896
 #define OQS_KEM_ledacrypt_22901_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_22901_new(void);
@@ -106,7 +106,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_22901_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_52667
 #define OQS_KEM_ledacrypt_52667_length_public_key 6584
-#define OQS_KEM_ledacrypt_52667_length_secret_key 50
+#define OQS_KEM_ledacrypt_52667_length_secret_key 66
 #define OQS_KEM_ledacrypt_52667_length_ciphertext 6616
 #define OQS_KEM_ledacrypt_52667_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_52667_new(void);
@@ -117,7 +117,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_52667_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_36629
 #define OQS_KEM_ledacrypt_36629_length_public_key 9168
-#define OQS_KEM_ledacrypt_36629_length_secret_key 50
+#define OQS_KEM_ledacrypt_36629_length_secret_key 66
 #define OQS_KEM_ledacrypt_36629_length_ciphertext 4616
 #define OQS_KEM_ledacrypt_36629_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_36629_new(void);
@@ -128,7 +128,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_36629_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_30803
 #define OQS_KEM_ledacrypt_30803_length_public_key 11568
-#define OQS_KEM_ledacrypt_30803_length_secret_key 50
+#define OQS_KEM_ledacrypt_30803_length_secret_key 66
 #define OQS_KEM_ledacrypt_30803_length_ciphertext 3888
 #define OQS_KEM_ledacrypt_30803_length_shared_secret 48
 OQS_KEM *OQS_KEM_ledacrypt_30803_new(void);
@@ -139,7 +139,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_30803_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_61717
 #define OQS_KEM_ledacrypt_61717_length_public_key 7720
-#define OQS_KEM_ledacrypt_61717_length_secret_key 50
+#define OQS_KEM_ledacrypt_61717_length_secret_key 82
 #define OQS_KEM_ledacrypt_61717_length_ciphertext 7760
 #define OQS_KEM_ledacrypt_61717_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_61717_new(void);
@@ -150,7 +150,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_61717_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_42677
 #define OQS_KEM_ledacrypt_42677_length_public_key 10672
-#define OQS_KEM_ledacrypt_42677_length_secret_key 50
+#define OQS_KEM_ledacrypt_42677_length_secret_key 82
 #define OQS_KEM_ledacrypt_42677_length_ciphertext 5376
 #define OQS_KEM_ledacrypt_42677_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_42677_new(void);
@@ -161,7 +161,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_42677_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_35507
 #define OQS_KEM_ledacrypt_35507_length_public_key 13320
-#define OQS_KEM_ledacrypt_35507_length_secret_key 50
+#define OQS_KEM_ledacrypt_35507_length_secret_key 82
 #define OQS_KEM_ledacrypt_35507_length_ciphertext 4480
 #define OQS_KEM_ledacrypt_35507_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_35507_new(void);
@@ -172,7 +172,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_35507_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_83579
 #define OQS_KEM_ledacrypt_83579_length_public_key 10448
-#define OQS_KEM_ledacrypt_83579_length_secret_key 50
+#define OQS_KEM_ledacrypt_83579_length_secret_key 82
 #define OQS_KEM_ledacrypt_83579_length_ciphertext 10488
 #define OQS_KEM_ledacrypt_83579_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_83579_new(void);
@@ -183,7 +183,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_83579_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_58171
 #define OQS_KEM_ledacrypt_58171_length_public_key 14544
-#define OQS_KEM_ledacrypt_58171_length_secret_key 50
+#define OQS_KEM_ledacrypt_58171_length_secret_key 82
 #define OQS_KEM_ledacrypt_58171_length_ciphertext 7312
 #define OQS_KEM_ledacrypt_58171_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_58171_new(void);
@@ -194,7 +194,7 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_58171_decaps(uint8_t *shared_secret, const 
 
 #ifdef OQS_ENABLE_KEM_ledacrypt_48371
 #define OQS_KEM_ledacrypt_48371_length_public_key 18144
-#define OQS_KEM_ledacrypt_48371_length_secret_key 50
+#define OQS_KEM_ledacrypt_48371_length_secret_key 82
 #define OQS_KEM_ledacrypt_48371_length_ciphertext 6088
 #define OQS_KEM_ledacrypt_48371_length_shared_secret 64
 OQS_KEM *OQS_KEM_ledacrypt_48371_new(void);

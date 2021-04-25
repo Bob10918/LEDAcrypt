@@ -75,7 +75,7 @@ void left_DIGIT_shift_n(const int length, DIGIT in[], int amount)
 /*----------------------------------------------------------------------------*/
 /* may shift by an arbitrary amount*/
 
-void OQS_NAMESPACE_left_bit_shift_wide_n(const int length, DIGIT *in, int amount)
+void OQS_NAMESPACE_left_bit_shift_wide_n(const int length, DIGIT in[], int amount)
 {
    left_DIGIT_shift_n(length, in, amount / DIGIT_SIZE_b);
     OQS_NAMESPACE_left_bit_shift_n(length, in, amount % DIGIT_SIZE_b);
@@ -154,7 +154,7 @@ with this CPU word bitsize !!! "
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_transpose_in_place(DIGIT *A)
+void OQS_NAMESPACE_gf2x_transpose_in_place(DIGIT A[])
 {
    /* it keeps the lsb in the same position and
     * inverts the sequence of the remaining bits
@@ -194,7 +194,7 @@ void OQS_NAMESPACE_gf2x_transpose_in_place(DIGIT *A)
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rotate_bit_left(DIGIT *in)   /*  equivalent to x * in(x) mod x^P+1 */
+void OQS_NAMESPACE_rotate_bit_left(DIGIT in[])   /*  equivalent to x * in(x) mod x^P+1 */
 {
 
    DIGIT mask,rotated_bit;
@@ -223,7 +223,7 @@ void OQS_NAMESPACE_rotate_bit_left(DIGIT *in)   /*  equivalent to x * in(x) mod 
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rotate_bit_right(DIGIT *in)   /*  x^{-1} * in(x) mod x^P+1 */
+void OQS_NAMESPACE_rotate_bit_right(DIGIT in[])   /*  x^{-1} * in(x) mod x^P+1 */
 {
 
    DIGIT rotated_bit = in[NUM_DIGITS_GF2X_ELEMENT-1] & ((DIGIT)0x1);
@@ -274,7 +274,7 @@ void gf2x_swap(const int length,
  */
 
 
-int OQS_NAMESPACE_gf2x_mod_inverse(DIGIT *out, const DIGIT *in)     /* in^{-1} mod x^P-1 */
+int OQS_NAMESPACE_gf2x_mod_inverse(DIGIT out[], const DIGIT in[])     /* in^{-1} mod x^P-1 */
 {
    int i;
    long int delta = 0;
@@ -332,11 +332,11 @@ int OQS_NAMESPACE_gf2x_mod_inverse(DIGIT *out, const DIGIT *in)     /* in^{-1} m
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_mod_mul(DIGIT *Res, const DIGIT *A, const DIGIT *B)
+void OQS_NAMESPACE_gf2x_mod_mul(DIGIT Res[], const DIGIT A[], const DIGIT B[])
 {
 
    DIGIT aux[2*NUM_DIGITS_GF2X_ELEMENT];
-    GF2X_MUL(2 * NUM_DIGITS_GF2X_ELEMENT, aux,
+    GF2X_MUL(2*NUM_DIGITS_GF2X_ELEMENT, aux,
              NUM_DIGITS_GF2X_ELEMENT, A,
              NUM_DIGITS_GF2X_ELEMENT, B);
     gf2x_mod(Res, aux);
@@ -369,10 +369,10 @@ void gf2x_fmac(DIGIT Res[],
 
 /*PRE: the representation of the sparse coefficients is sorted in increasing
  order of the coefficients themselves */
-void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT *Res,
-                                                               const DIGIT *dense,
-                                                               const uint32_t *sparse,
-                                                               unsigned int nPos)
+void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
+                                                const DIGIT dense[],
+                                                const POSITION_T sparse[],
+                                                unsigned int nPos)
 {
    DIGIT resDouble[2*NUM_DIGITS_GF2X_ELEMENT] = {0};
 
@@ -389,7 +389,7 @@ void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT *Res,
 /*----------------------------------------------------------------------------*/
 
 
-void OQS_NAMESPACE_gf2x_transpose_in_place_sparse(int sizeA, uint32_t *A)
+void OQS_NAMESPACE_gf2x_transpose_in_place_sparse(int sizeA, POSITION_T A[])
 {
 
    POSITION_T t;
@@ -417,18 +417,18 @@ void OQS_NAMESPACE_gf2x_transpose_in_place_sparse(int sizeA, uint32_t *A)
  * for the '1's in the circulant block are obtained */
 
 void OQS_NAMESPACE_rand_circulant_sparse_block(POSITION_T *pos_ones,
-                                                              const int countOnes,
-                                                              AES_XOF_struct *seed_expander_ctx)
+                                               const int countOnes,
+                                               AES_XOF_struct *seed_expander_ctx)
 {
 
    int duplicated, placedOnes = 0;
 
    while (placedOnes < countOnes) {
-      int p = OQS_NAMESPACE_rand_range(NUM_BITS_GF2X_ELEMENT,
+      uint32_t p = OQS_NAMESPACE_rand_range(NUM_BITS_GF2X_ELEMENT,
                                                       BITS_TO_REPRESENT(P),
                                                       seed_expander_ctx);
       duplicated = 0;
-      for (int j = 0; j < placedOnes; j++) if (pos_ones[j] == (uint32_t)p) duplicated = 1;
+      for (int j = 0; j < placedOnes; j++) if (pos_ones[j] == p) duplicated = 1;
       if (duplicated == 0) {
          pos_ones[placedOnes] = p;
          placedOnes++;
@@ -438,9 +438,9 @@ void OQS_NAMESPACE_rand_circulant_sparse_block(POSITION_T *pos_ones,
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT *sequence,
-                                                                 const int countOnes,
-                                                                 AES_XOF_struct *seed_expander_ctx)
+void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT sequence[N0*NUM_DIGITS_GF2X_ELEMENT],
+                                                  const int countOnes,
+                                                  AES_XOF_struct *seed_expander_ctx)
 {
 
    int rndPos[countOnes],  duplicated, counter = 0;
@@ -448,8 +448,8 @@ void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT *sequence,
 
 
    while (counter < countOnes) {
-      int p = OQS_NAMESPACE_rand_range(N0 * NUM_BITS_GF2X_ELEMENT, BITS_TO_REPRESENT(P),
-                                                      seed_expander_ctx);
+      int p = OQS_NAMESPACE_rand_range(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
+                                       seed_expander_ctx);
       duplicated = 0;
       for (int j = 0; j < counter; j++) if (rndPos[j] == p) duplicated = 1;
       if (duplicated == 0) {
@@ -466,17 +466,17 @@ void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT *sequence,
 } // end OQS_NAMESPACE_rand_circulant_blocks_sequence
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rand_error_pos(uint32_t *errorPos,
-                                                 AES_XOF_struct *seed_expander_ctx)
+void OQS_NAMESPACE_rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
+                                  AES_XOF_struct *seed_expander_ctx)
 {
 
    int duplicated, counter = 0;
 
    while (counter < NUM_ERRORS_T) {
-      int p = OQS_NAMESPACE_rand_range(N0 * NUM_BITS_GF2X_ELEMENT, BITS_TO_REPRESENT(P),
-                                                      seed_expander_ctx);
+      uint32_t p = OQS_NAMESPACE_rand_range(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
+                                       seed_expander_ctx);
       duplicated = 0;
-      for (int j = 0; j < counter; j++) if (errorPos[j] == (uint32_t)p) duplicated = 1;
+       for (int j = 0; j < counter; j++) if (errorPos[j] == p) duplicated = 1;
       if (duplicated == 0) {
          errorPos[counter] = p;
          counter++;
@@ -486,17 +486,17 @@ void OQS_NAMESPACE_rand_error_pos(uint32_t *errorPos,
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rand_error_pos_shake(uint32_t *errorPos,
-                                                       xof_shake_t *state)
+void OQS_NAMESPACE_rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
+                                        xof_shake_t *state)
 {
 
    int duplicated, counter = 0;
 
    while (counter < NUM_ERRORS_T) {
-      int p = OQS_NAMESPACE_rand_range_shake(N0 * NUM_BITS_GF2X_ELEMENT, BITS_TO_REPRESENT(P),
-                                                            state);
+      uint32_t p = OQS_NAMESPACE_rand_range_shake(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
+                                             state);
       duplicated = 0;
-      for (int j = 0; j < counter; j++) if (errorPos[j] == (uint32_t)p) duplicated = 1;
+      for (int j = 0; j < counter; j++) if (errorPos[j] == p) duplicated = 1;
       if (duplicated == 0) {
          errorPos[counter] = p;
          counter++;
@@ -506,8 +506,8 @@ void OQS_NAMESPACE_rand_error_pos_shake(uint32_t *errorPos,
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_expand_error(DIGIT *sequence,
-                                               uint32_t *errorPos)
+void OQS_NAMESPACE_expand_error(DIGIT sequence[N0*NUM_DIGITS_GF2X_ELEMENT],
+                                POSITION_T errorPos[NUM_ERRORS_T])
 {
    memset(sequence, 0x00, N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B);
 

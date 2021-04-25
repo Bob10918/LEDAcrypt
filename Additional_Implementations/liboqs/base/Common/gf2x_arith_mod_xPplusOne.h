@@ -70,7 +70,7 @@ static inline void gf2x_copy(DIGIT dest[], const DIGIT in[])
 
 /*---------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_mod_mul(DIGIT *Res, const DIGIT *A, const DIGIT *B);
+void OQS_NAMESPACE_gf2x_mod_mul(DIGIT Res[], const DIGIT A[], const DIGIT B[]);
 
 /*---------------------------------------------------------------------------*/
 
@@ -83,7 +83,7 @@ static inline void gf2x_mod_add(DIGIT Res[], const DIGIT A[], const DIGIT B[])
 /*----------------------------------------------------------------------------*/
 
 void OQS_NAMESPACE_gf2x_transpose_in_place(DIGIT
-                             *A); /* in place bit-transp. of a(x) % x^P+1  *
+                             A[]); /* in place bit-transp. of a(x) % x^P+1  *
                                       * e.g.: a3 a2 a1 a0 --> a1 a2 a3 a0     */
 
 /*---------------------------------------------------------------------------*/
@@ -158,36 +158,36 @@ void gf2x_toggle_coeff(DIGIT poly[], const unsigned int exponent)
 /*--------------------------------------------------------------------------*/
 
 void OQS_NAMESPACE_rand_circulant_sparse_block(POSITION_T *pos_ones,
-                                                              const int countOnes,
-                                                              AES_XOF_struct *seed_expander_ctx);
+                                               const int countOnes,
+                                               AES_XOF_struct *seed_expander_ctx);
 /*--------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT *sequence,
+void OQS_NAMESPACE_rand_circulant_blocks_sequence(DIGIT sequence[N0*NUM_DIGITS_GF2X_ELEMENT],
                                                                  const int countOnes,
                                                                  AES_XOF_struct *seed_expander_ctx
                                    );
 
 /*---------------------------------------------------------------------------*/
-void OQS_NAMESPACE_rand_error_pos(uint32_t *errorPos,
+void OQS_NAMESPACE_rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
                                                  AES_XOF_struct *seed_expander_ctx);
 
 /*---------------------------------------------------------------------------*/
-void OQS_NAMESPACE_rand_error_pos_shake(uint32_t *errorPos,
+void OQS_NAMESPACE_rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
                                                        xof_shake_t *state);
 
 /*---------------------------------------------------------------------------*/
-void OQS_NAMESPACE_expand_error(DIGIT *sequence,
-                                               uint32_t *errorPos);
+void OQS_NAMESPACE_expand_error(DIGIT sequence[N0*NUM_DIGITS_GF2X_ELEMENT],
+                                POSITION_T errorPos[NUM_ERRORS_T]);
 
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_transpose_in_place_sparse(int sizeA, uint32_t *A);
+void OQS_NAMESPACE_gf2x_transpose_in_place_sparse(int sizeA, POSITION_T A[]);
 
 /*----------------------------------------------------------------------------*/
-void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT *Res,
-                                                               const DIGIT *dense,
-                                                               const uint32_t *sparse,
-                                                               unsigned int nPos);
+void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
+                                                const DIGIT dense[],
+                                                const POSITION_T sparse[],
+                                                unsigned int nPos);
 /*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
 
@@ -234,8 +234,7 @@ void gf2x_mod_densify_VT(DIGIT dense[NUM_DIGITS_GF2X_ELEMENT],
 
 static inline
 void gf2x_mod_sparsify_error_CT(const DIGIT dense[N0*NUM_DIGITS_GF2X_ELEMENT],
-                                POSITION_T positionsOut[]
-                                )
+                                POSITION_T positionsOut[])
 {
    POSITION_T pos_being_written_idx = 0;
    for (int i = 0; i < N0 ; i++) {
@@ -257,7 +256,7 @@ void gf2x_mod_sparsify_error_CT(const DIGIT dense[N0*NUM_DIGITS_GF2X_ELEMENT],
 /*----------------------------------------------------------------------------*/
 
 #define GF2X_DIGIT_MOD_INVERSE OQS_NAMESPACE_gf2x_mod_inverse
-int OQS_NAMESPACE_gf2x_mod_inverse(DIGIT *out, const DIGIT *in);
+int OQS_NAMESPACE_gf2x_mod_inverse(DIGIT out[], const DIGIT in[]);
 /*----------------------------------------------------------------------------*/
 
 #endif

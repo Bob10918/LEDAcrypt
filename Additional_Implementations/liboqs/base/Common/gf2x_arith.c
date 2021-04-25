@@ -9,9 +9,9 @@ void OQS_NAMESPACE_gf2x_mul_Kar(const int nr, DIGIT *Res,
                                                const int nb, const DIGIT *B);
 /*----------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_mul_comb(const int nr, DIGIT *Res,
-                                                const int na, const DIGIT *A,
-                                                const int nb, const DIGIT *B)
+void OQS_NAMESPACE_gf2x_mul_comb(const int nr, DIGIT Res[],
+                                 const int na, const DIGIT A[],
+                                 const int nb, const DIGIT B[])
 {
    int i, j, k;
    DIGIT u, h;
@@ -52,7 +52,7 @@ static inline void gf2x_add_asymm(DIGIT Res[], const int na, const DIGIT A[], co
 
 /* PRE: MAX ALLOWED ROTATION AMOUNT : DIGIT_SIZE_b */
 
-void OQS_NAMESPACE_right_bit_shift_n(const int length, DIGIT *in, const int amount)
+void OQS_NAMESPACE_right_bit_shift_n(const int length, DIGIT in[], const int amount)
 {
    if ( amount == 0 ) return;
    int j;
@@ -68,7 +68,7 @@ void OQS_NAMESPACE_right_bit_shift_n(const int length, DIGIT *in, const int amou
 /*----------------------------------------------------------------------------*/
 
 /* PRE: MAX ALLOWED ROTATION AMOUNT : DIGIT_SIZE_b */
-void OQS_NAMESPACE_left_bit_shift_n(const int length, DIGIT *in, const int amount)
+void OQS_NAMESPACE_left_bit_shift_n(const int length, DIGIT in[], const int amount)
 {
    if ( amount == 0 ) return;
    int j;
@@ -83,9 +83,9 @@ void OQS_NAMESPACE_left_bit_shift_n(const int length, DIGIT *in, const int amoun
 
 /*---------------------------------------------------------------------------*/
 
-void OQS_NAMESPACE_gf2x_mul_Kar(const int nr, DIGIT *Res,
-                                               const int na, const DIGIT *A,
-                                               const int nb, const DIGIT *B)
+void OQS_NAMESPACE_gf2x_mul_Kar(const int nr, DIGIT Res[],
+                                const int na, const DIGIT A[],
+                                const int nb, const DIGIT B[])
 {
 
    if(na < MIN_KAR_DIGITS || nb < MIN_KAR_DIGITS) {
@@ -166,9 +166,9 @@ static inline void gf2x_exact_div_x_plus_one(const int na, DIGIT A[])
  * Marco Bodrato: "Towards Optimal Toom-Cook Multiplication for Univariate and
  * Multivariate Polynomials in Characteristic 2 and 0". WAIFI 2007: 116-133   */
 
-void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT *Res,
-                                               const int na, const DIGIT *A,
-                                               const int nb, const DIGIT *B)
+void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT Res[],
+                                const int na, const DIGIT A[],
+                                const int nb, const DIGIT B[])
 {
 
    if(na < MIN_TOOM_DIGITS || nb < MIN_TOOM_DIGITS) {

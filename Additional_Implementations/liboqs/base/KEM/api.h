@@ -25,20 +25,20 @@
 
 /* Generates a keypair - pk is the public key and sk is the secret key. */
 int OQS_NAMESPACE_crypto_kem_keypair(uint8_t *pk,
-                                                   uint8_t *sk );
+                                     uint8_t *sk );
 
 /* Encrypt - pk is the public key, ct is a key encapsulation message
   (ciphertext), ss is the shared secret.*/
 int OQS_NAMESPACE_crypto_kem_enc(uint8_t *ct,
-                                               uint8_t *ss,
-                                               const uint8_t *pk );
+                                 uint8_t *ss,
+                                 const uint8_t *pk );
 
 
 /* Decrypt - ct is a key encapsulation message (ciphertext), sk is the private
    key, ss is the shared secret */
 
 int OQS_NAMESPACE_crypto_kem_dec(uint8_t *ss,
-                                               const uint8_t *ct,
-                                               const uint8_t *sk );
+                                 const uint8_t *ct,
+                                 const uint8_t *sk );
 
 #endif
