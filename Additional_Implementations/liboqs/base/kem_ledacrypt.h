@@ -203,4 +203,95 @@ OQS_API OQS_STATUS OQS_KEM_ledacrypt_48371_encaps(uint8_t *ciphertext, uint8_t *
 OQS_API OQS_STATUS OQS_KEM_ledacrypt_48371_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
 #endif
 
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_10883
+#define OQS_KEM_ledacrypt_cpa_10883_length_public_key 1368
+#define OQS_KEM_ledacrypt_cpa_10883_length_secret_key 1160
+#define OQS_KEM_ledacrypt_cpa_10883_length_ciphertext 1392
+#define OQS_KEM_ledacrypt_cpa_10883_length_shared_secret 32
+OQS_KEM *OQS_KEM_ledacrypt_cpa_10883_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_10883_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_10883_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_10883_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_8237
+#define OQS_KEM_ledacrypt_cpa_8237_length_public_key 2064
+#define OQS_KEM_ledacrypt_cpa_8237_length_secret_key 1920
+#define OQS_KEM_ledacrypt_cpa_8237_length_ciphertext 1056
+#define OQS_KEM_ledacrypt_cpa_8237_length_shared_secret 32
+OQS_KEM *OQS_KEM_ledacrypt_cpa_8237_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_8237_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_8237_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_8237_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_7187
+#define OQS_KEM_ledacrypt_cpa_7187_length_public_key 2712
+#define OQS_KEM_ledacrypt_cpa_7187_length_secret_key 2680
+#define OQS_KEM_ledacrypt_cpa_7187_length_ciphertext 928
+#define OQS_KEM_ledacrypt_cpa_7187_length_shared_secret 32
+OQS_KEM *OQS_KEM_ledacrypt_cpa_7187_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_7187_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_7187_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_7187_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_21011
+#define OQS_KEM_ledacrypt_cpa_21011_length_public_key 2632
+#define OQS_KEM_ledacrypt_cpa_21011_length_secret_key 1680
+#define OQS_KEM_ledacrypt_cpa_21011_length_ciphertext 2664
+#define OQS_KEM_ledacrypt_cpa_21011_length_shared_secret 48
+OQS_KEM *OQS_KEM_ledacrypt_cpa_21011_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21011_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21011_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21011_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_15373
+#define OQS_KEM_ledacrypt_cpa_15373_length_public_key 3856
+#define OQS_KEM_ledacrypt_cpa_15373_length_secret_key 2840
+#define OQS_KEM_ledacrypt_cpa_15373_length_ciphertext 1960
+#define OQS_KEM_ledacrypt_cpa_15373_length_shared_secret 48
+OQS_KEM *OQS_KEM_ledacrypt_cpa_15373_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_15373_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_15373_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_15373_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_13109
+#define OQS_KEM_ledacrypt_cpa_13109_length_public_key 4920
+#define OQS_KEM_ledacrypt_cpa_13109_length_secret_key 3968
+#define OQS_KEM_ledacrypt_cpa_13109_length_ciphertext 1672
+#define OQS_KEM_ledacrypt_cpa_13109_length_shared_secret 48
+OQS_KEM *OQS_KEM_ledacrypt_cpa_13109_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_13109_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_13109_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_13109_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_35339
+#define OQS_KEM_ledacrypt_cpa_35339_length_public_key 4424
+#define OQS_KEM_ledacrypt_cpa_35339_length_secret_key 2232
+#define OQS_KEM_ledacrypt_cpa_35339_length_ciphertext 4464
+#define OQS_KEM_ledacrypt_cpa_35339_length_shared_secret 64
+OQS_KEM *OQS_KEM_ledacrypt_cpa_35339_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_35339_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_35339_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_35339_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_25603
+#define OQS_KEM_ledacrypt_cpa_25603_length_public_key 6416
+#define OQS_KEM_ledacrypt_cpa_25603_length_secret_key 3760
+#define OQS_KEM_ledacrypt_cpa_25603_length_ciphertext 3248
+#define OQS_KEM_ledacrypt_cpa_25603_length_shared_secret 64
+OQS_KEM *OQS_KEM_ledacrypt_cpa_25603_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_25603_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_25603_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_25603_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+#ifdef OQS_ENABLE_KEM_ledacrypt_cpa_21611
+#define OQS_KEM_ledacrypt_cpa_21611_length_public_key 8112
+#define OQS_KEM_ledacrypt_cpa_21611_length_secret_key 5256
+#define OQS_KEM_ledacrypt_cpa_21611_length_ciphertext 2744
+#define OQS_KEM_ledacrypt_cpa_21611_length_shared_secret 64
+OQS_KEM *OQS_KEM_ledacrypt_cpa_21611_new(void);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21611_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21611_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
+OQS_API OQS_STATUS OQS_KEM_ledacrypt_cpa_21611_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+#endif
+
 #endif // OQS_KEM_LEDACRYPT_H

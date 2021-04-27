@@ -27,8 +27,7 @@ int OQS_NAMESPACE_crypto_kem_enc(uint8_t *ct,
                                  const uint8_t *pk )
 {
 
-    OQS_NAMESPACE_encrypt_niederreiter_indcca2((unsigned char *const)
-                                                ct, /* ciphertext - output   */
+    OQS_NAMESPACE_encrypt_niederreiter_indcca2((unsigned char *const) ct, /* ciphertext - output   */
                                                 (unsigned char *const) ss,  /* shared secret - output*/
                                                 (const publicKeyNiederreiter_t *const) pk);
 
