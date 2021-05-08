@@ -1,16 +1,17 @@
-LEDACRYPT_SOURCE_FOLDERS = [
-    'base/Reference_Implementation/Common',
-    'base/Reference_Implementation/KEM'
-]
+IMPLEMENTATIONS = ['clean', 'avx2']
 
-LEDACRYPT_CPA_SOURCE_FOLDERS = [
-    'base/Reference_Implementation/Common',
-    'base/Reference_Implementation/KEM-CPA'
-]
+LEDACRYPT_SOURCE_FOLDERS = {
+    'clean':['base/Reference_Implementation/Common', 'base/Reference_Implementation/KEM'],
+    'avx2':['base/Optimized_Implementation/Common', 'base/Optimized_Implementation/KEM']
+}
+
+LEDACRYPT_CPA_SOURCE_FOLDERS = {
+    'clean':['base/Reference_Implementation/Common', 'base/Reference_Implementation/KEM-CPA'],
+    'avx2':['base/Optimized_Implementation/Common', 'base/Optimized_Implementation/KEM-CPA']
+}
 
 params = [
     {'name': 'ledacrypt_23371',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -25,7 +26,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_16067',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -40,7 +40,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_13397',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -55,7 +54,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_28277',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -70,7 +68,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_19709',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -85,7 +82,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_16229',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -100,7 +96,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_40787',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -115,7 +110,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_28411',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -130,7 +124,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_22901',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -145,7 +138,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_52667',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -160,7 +152,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_36629',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -175,7 +166,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_30803',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -190,7 +180,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_61717',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -205,7 +194,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_42677',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -220,7 +208,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_35507',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=0'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -235,7 +222,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_83579',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -250,7 +236,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_58171',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -265,7 +250,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_48371',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=1'],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
@@ -280,7 +264,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_10883',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=2'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -295,7 +278,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_8237',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=3'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -310,7 +292,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_7187',
-     'impl': 'clean',
      'def': ['CATEGORY=1', 'N0=4'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -325,7 +306,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_21011',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=2'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -340,7 +320,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_15373',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=3'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -355,7 +334,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_13109',
-     'impl': 'clean',
      'def': ['CATEGORY=3', 'N0=4'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -370,7 +348,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_35339',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=2'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -385,7 +362,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_25603',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=3'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,
@@ -400,7 +376,6 @@ params = [
      }
     },
     {'name': 'ledacrypt_cpa_21611',
-     'impl': 'clean',
      'def': ['CATEGORY=5', 'N0=4'],
      'undef': [],
      'src_folders': LEDACRYPT_CPA_SOURCE_FOLDERS,

@@ -166,6 +166,15 @@
 #error "Unsupported Category"
 #endif
 
+
+#if (N0 == 2)
+#define     N0 (2)
+#elif (N0 == 3)
+#define     N0 (3)
+#else
+#define     N0 (4)
+#endif
+
 // Derived parameters, they are useful for QC-LDPC algorithms
 #define HASH_BIT_LENGTH (HASH_BYTE_LENGTH << 3)
 #define               K ((N0-1)*P)
