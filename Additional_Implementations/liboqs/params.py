@@ -1,11 +1,11 @@
 LEDACRYPT_SOURCE_FOLDERS = [
-    'base/Common',
-    'base/KEM'
+    'base/Reference_Implementation/Common',
+    'base/Reference_Implementation/KEM'
 ]
 
 LEDACRYPT_CPA_SOURCE_FOLDERS = [
-    'base/Common',
-    'base/KEM-CPA'
+    'base/Reference_Implementation/Common',
+    'base/Reference_Implementation/KEM-CPA'
 ]
 
 params = [
