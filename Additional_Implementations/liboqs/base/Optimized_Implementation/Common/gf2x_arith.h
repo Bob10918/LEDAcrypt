@@ -97,7 +97,7 @@ static inline void gf2x_add(const int nr, DIGIT Res[],
 #if (defined HIGH_PERFORMANCE_X86_64)
    __m256i a, b;
    unsigned i;
-   for(i = 0; i < nr/4; i++) {
+   for(i = 0; (int) i < nr/4; i++) {
       a = _mm256_lddqu_si256( (__m256i *)A + i );
       b = _mm256_lddqu_si256( (__m256i *)B + i );
       _mm256_storeu_si256(((__m256i *)Res + i), _mm256_xor_si256(a, b));

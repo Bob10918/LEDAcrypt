@@ -60,9 +60,10 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const ct,  /* ciph
    error_vector[0] = 0x00;
    expand_error( ( (DIGIT *)(&error_vector[1]) ), errorPos);
 
-   HASH_FUNCTION((unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
-                 ss);
+   HASH_FUNCTION(ss,
+                 (unsigned char *) error_vector,        // input
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
+                 );
 
    encrypt_niederreiter((DIGIT *) ct,
                         pk,
@@ -70,9 +71,10 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const ct,  /* ciph
                         ((const DIGIT * const) (&error_vector[1])));
    unsigned char tagMask[HASH_BYTE_LENGTH];
    error_vector[0] = 0x01;
-   HASH_FUNCTION((unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
-                 tagMask);
+   HASH_FUNCTION(tagMask,
+                 (unsigned char *) error_vector,        // input
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
+                 );
 
    for (int i = 0; i < TRNG_BYTE_LENGTH; ++i) {
       tag[i] = err_vect_seed[i] ^ tagMask[i];

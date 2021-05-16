@@ -98,7 +98,7 @@ void encrypt_niederreiter_indcca2(unsigned char *const
    memcpy(ss_input, seed, TRNG_BYTE_LENGTH);
    HASH_FUNCTION((unsigned char *) ss,
                  (const unsigned char *) ss_input, // input
-                 2*TRNG_BYTE_LENGTH,               // input Length
+                 2*TRNG_BYTE_LENGTH                // input Length
                  );
 
    // in api.h CRYPTO_CIPHERTEXTBYTES is defined for KEMLT
@@ -111,7 +111,7 @@ void encrypt_niederreiter_indcca2(unsigned char *const
    uint8_t hashedAndTruncatedSeed[TRNG_BYTE_LENGTH] = {0};
    HASH_FUNCTION((unsigned char *) hashedSeed,
                  (const unsigned char *) seed,// input
-                 TRNG_BYTE_LENGTH,            // input Length
+                 TRNG_BYTE_LENGTH             // input Length
                  );
 
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)
@@ -134,7 +134,7 @@ void encrypt_niederreiter_indcca2(unsigned char *const
    uint8_t hashedErrorVector[HASH_BYTE_LENGTH];
    HASH_FUNCTION((unsigned char *) hashedErrorVector,
                  (const unsigned char *) error_vector,      // input
-                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)  // input Length
                  );
 
    uint8_t hashedAndTruncaedErrorVector[TRNG_BYTE_LENGTH] = {0};

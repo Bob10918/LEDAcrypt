@@ -72,7 +72,7 @@ int decrypt_niederreiter_indcpa(unsigned char *const
    decoded_error_vector[0] = 0x01;
    HASH_FUNCTION(tagMask,
                  (const unsigned char *) decoded_error_vector, // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),  // input Length
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)   // input Length
                  );
    decoded_error_vector[0] = 0x00;
    for (int i = 0; i < TRNG_BYTE_LENGTH; ++i)
@@ -122,13 +122,13 @@ int decrypt_niederreiter_indcpa(unsigned char *const
       // decoded_error_vector[0] = 0x00; this byte is already set to zero
       HASH_FUNCTION(ss,
                     (unsigned char *const) decoded_error_vector,
-                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
+                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)
                     );
    } else {
       // tmp[0] = 0x00; this byte is already set to zero
       HASH_FUNCTION(ss,
                     (unsigned char *const) tmp,
-                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
+                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)
                     );
    }
    return 1;

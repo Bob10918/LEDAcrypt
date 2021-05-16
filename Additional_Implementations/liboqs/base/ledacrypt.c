@@ -35,7 +35,7 @@ extern int OQS_NAMESPACE_crypto_kem_keypair(unsigned char *pk, unsigned char *sk
 extern int OQS_NAMESPACE_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk);
 extern int OQS_NAMESPACE_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk);
 
-#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx)
+#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx2)
 extern int OQS_AVX_NAMESPACE_crypto_kem_keypair(unsigned char *pk, unsigned char *sk);
 extern int OQS_AVX_NAMESPACE_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk);
 extern int OQS_AVX_NAMESPACE_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk);
@@ -43,7 +43,7 @@ extern int OQS_AVX_NAMESPACE_crypto_kem_dec(unsigned char *ss, const unsigned ch
 
 
 OQS_API OQS_STATUS OQS_KEM_GENERATOR_SCHEME_NAME_keypair(uint8_t *public_key, uint8_t *secret_key) {
-#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx)
+#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx2)
 #if defined(OQS_DIST_BUILD)
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2)) {
 #endif /* OQS_DIST_BUILD */
@@ -59,7 +59,7 @@ OQS_API OQS_STATUS OQS_KEM_GENERATOR_SCHEME_NAME_keypair(uint8_t *public_key, ui
 }
 
 OQS_API OQS_STATUS OQS_KEM_GENERATOR_SCHEME_NAME_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key) {
-#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx)
+#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx2)
 #if defined(OQS_DIST_BUILD)
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2)) {
 #endif /* OQS_DIST_BUILD */
@@ -75,7 +75,7 @@ OQS_API OQS_STATUS OQS_KEM_GENERATOR_SCHEME_NAME_encaps(uint8_t *ciphertext, uin
 }
 
 OQS_API OQS_STATUS OQS_KEM_GENERATOR_SCHEME_NAME_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key) {
-#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx)
+#if defined(OQS_ENABLE_KEM_GENERATOR_SCHEME_NAME_avx2)
 #if defined(OQS_DIST_BUILD)
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2)) {
 #endif /* OQS_DIST_BUILD */

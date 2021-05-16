@@ -10,9 +10,11 @@ LEDACRYPT_CPA_SOURCE_FOLDERS = {
     'avx2':['base/Optimized_Implementation/Common', 'base/Optimized_Implementation/KEM-CPA']
 }
 
+CONSTANT_TIME = '1'
+
 params = [
     {'name': 'ledacrypt_23371',
-     'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -26,7 +28,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_16067',
-     'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -40,7 +42,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_13397',
-     'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -54,7 +56,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_28277',
-     'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=1', 'N0=2', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -68,7 +70,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_19709',
-     'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=1', 'N0=3', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -82,7 +84,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_16229',
-     'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=1', 'N0=4', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -96,7 +98,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_40787',
-     'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -110,7 +112,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_28411',
-     'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -124,7 +126,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_22901',
-     'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -138,7 +140,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_52667',
-     'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=3', 'N0=2', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -152,7 +154,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_36629',
-     'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=3', 'N0=3', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -166,7 +168,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_30803',
-     'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=3', 'N0=4', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -180,7 +182,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_61717',
-     'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -194,7 +196,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_42677',
-     'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -208,7 +210,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_35507',
-     'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=0'],
+     'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=0', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -222,7 +224,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_83579',
-     'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=5', 'N0=2', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -236,7 +238,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_58171',
-     'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=5', 'N0=3', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {
@@ -250,7 +252,7 @@ params = [
      }
     },
     {'name': 'ledacrypt_48371',
-     'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=1'],
+     'def': ['CATEGORY=5', 'N0=4', 'DFR_SL_LEVEL=1', 'CONSTANT_TIME='+CONSTANT_TIME],
      'undef': [],
      'src_folders': LEDACRYPT_SOURCE_FOLDERS,
      'values': {

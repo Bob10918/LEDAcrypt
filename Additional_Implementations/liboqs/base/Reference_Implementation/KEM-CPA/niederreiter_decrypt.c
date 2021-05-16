@@ -37,9 +37,10 @@ int OQS_NAMESPACE_decrypt_niederreiter_indcpa(unsigned char *const ss,          
    unsigned char reconstructed_err_vect_seed[TRNG_BYTE_LENGTH];
    unsigned char tagMask[HASH_BYTE_LENGTH];
    decoded_error_vector[0] = 0x01;
-   HASH_FUNCTION((const unsigned char *) decoded_error_vector, // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),  // input Length
-                 tagMask);
+   HASH_FUNCTION(tagMask,
+                 (const unsigned char *) decoded_error_vector, // input
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)   // input Length
+                 );
    decoded_error_vector[0] = 0x00;
    for (int i = 0; i < TRNG_BYTE_LENGTH; ++i)
       reconstructed_err_vect_seed[i] = tag[i] ^ tagMask[i];
@@ -86,14 +87,16 @@ int OQS_NAMESPACE_decrypt_niederreiter_indcpa(unsigned char *const ss,          
          error_value_ok == 0 ) { // this check also includes HW(e) == t
 
       // decoded_error_vector[0] = 0x00; this byte is already set to zero
-      HASH_FUNCTION((unsigned char *const) decoded_error_vector,
-                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
-                    ss);
+      HASH_FUNCTION(ss,
+                    (unsigned char *const) decoded_error_vector,
+                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)
+                    );
    } else {
       // tmp[0] = 0x00; this byte is already set to zero
-      HASH_FUNCTION((unsigned char *const) tmp,
-                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
-                    ss);
+      HASH_FUNCTION(ss,
+                    (unsigned char *const) tmp,
+                    (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)
+                    );
    }
    return 1;
 } // end decrypt_niederreiter_indcpa

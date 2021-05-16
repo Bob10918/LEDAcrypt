@@ -93,7 +93,7 @@ void encrypt_niederreiter_indcpa(unsigned char *const
 
    HASH_FUNCTION(ss,
                  (unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
                  );
 
    encrypt_niederreiter((DIGIT *) ct,
@@ -104,7 +104,7 @@ void encrypt_niederreiter_indcpa(unsigned char *const
    error_vector[0] = 0x01;
    HASH_FUNCTION(tagMask,
                  (unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
                  );
 
    for (int i = 0; i < TRNG_BYTE_LENGTH; ++i) {

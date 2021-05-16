@@ -36,7 +36,6 @@ for param in params:
                     cmd = ("unifdef -m " 
                         + " ".join(["-D"+d for d in param['def']]) + " "
                         + " ".join(['-U'+d for d in param.get('undef', [])])
-                        + " -DCONSTANT_TIME "
                         + f" {pqcleanDir}/{f}")
                     print(cmd)
                     subprocess.call(cmd, shell=True)

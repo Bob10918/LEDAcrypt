@@ -128,7 +128,7 @@ void decrypt_niederreiter_indcca2(unsigned char *const ss,
    uint8_t hashedErrorVector[HASH_BYTE_LENGTH];
    HASH_FUNCTION((unsigned char *) hashedErrorVector,
                  (const unsigned char *) decoded_error_vector, // input
-                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)     // input Length
                  );
 
    uint8_t hashedAndTruncaedErrorVector[TRNG_BYTE_LENGTH] = {0};
@@ -148,7 +148,7 @@ void decrypt_niederreiter_indcca2(unsigned char *const ss,
    uint8_t hashedAndTruncaed_decoded_seed[TRNG_BYTE_LENGTH] = {0};
    HASH_FUNCTION((unsigned char *) hashed_decoded_seed,
                  (const unsigned char *) decoded_seed,// input
-                 TRNG_BYTE_LENGTH,                    // input Length
+                 TRNG_BYTE_LENGTH                     // input Length
                  );
 
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)
@@ -197,7 +197,7 @@ void decrypt_niederreiter_indcca2(unsigned char *const ss,
 
    HASH_FUNCTION((unsigned char *) ss,
                  (const unsigned char *) ss_input, // input
-                 2*TRNG_BYTE_LENGTH,               // input Length
+                 2*TRNG_BYTE_LENGTH                // input Length
                  );
 
 } // end decrypt_niederreiter_indcca2
