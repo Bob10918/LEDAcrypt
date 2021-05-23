@@ -26,24 +26,28 @@ for param in params:
                 # copy over common source files
                 shutil.copyfile(f"{src}/{f}", f"{pqcleanDir}/{f}")
 
-                if f != 'inverse_perm_tables.h':
-                    # namespace source files
-                    cmd = f"sed -i 's/OQS_NAMESPACE/{nmspc}/g' '{pqcleanDir}/{f}'"
-                    print(cmd)
-                    subprocess.check_call(cmd, shell=True)
+                
+                # namespace source files
+                cmd = f"sed -i 's/OQS_NAMESPACE/{nmspc}/g' '{pqcleanDir}/{f}'"
+                print(cmd)
+                subprocess.check_call(cmd, shell=True)
 
-                    # remove preprocessor conditionals
-                    cmd = ("unifdef -m " 
-                        + " ".join(["-D"+d for d in param['def']]) + " "
-                        + " ".join(['-U'+d for d in param.get('undef', [])])
-                        + f" {pqcleanDir}/{f}")
-                    print(cmd)
-                    subprocess.call(cmd, shell=True)
+                # remove preprocessor conditionals
+                cmd = ("unifdef -m " 
+                    + " ".join(["-D"+d for d in param['def']]) + " "
+                    + " ".join(['-U'+d for d in param.get('undef', [])])
+                    + f" {pqcleanDir}/{f}")
+                print(cmd)
+                subprocess.call(cmd, shell=True)
 
         # copy over param specific files
         for f in ['api.h']:
             cmd = "sed -i '" + "".join(["s/"+k+"/"+v+"/g; " for k,v in param['values'].items()]) + "' " + f"'{pqcleanDir}/{f}'"
             subprocess.check_call(cmd, shell=True)
+
+        # copy specific table if this is the optimized implementation
+        if impl=='avx2':
+            shutil.copyfile(f"./tables/inverse_perm_tables_{parameterSet.split('_')[-1]}.h", f"{pqcleanDir}/inverse_perm_tables.h")
 
     # copy over oqs header file
     shutil.copyfile(f"base/ledacrypt.c", f"{TARGET_FOLDER}/kem_{parameterSet}.c")
