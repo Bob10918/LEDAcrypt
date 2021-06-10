@@ -35,12 +35,12 @@
 
 /*----------------------------------------------------------------------------*/
 
-void generateHPosOnes(POSITION_T HPosOnes[N0][V], /* output*/
+void OQS_NAMESPACE_generateHPosOnes(POSITION_T HPosOnes[N0][V], /* output*/
                       AES_XOF_struct *niederreiter_keys_expander);
 
 /*----------------------------------------------------------------------------*/
 
-void transposeHPosOnes(POSITION_T HtrPosOnes[N0][V], /* output*/
+void OQS_NAMESPACE_transposeHPosOnes(POSITION_T HtrPosOnes[N0][V], /* output*/
                        POSITION_T const HPosOnes[N0][V]);
 
 /*----------------------------------------------------------------------------*/

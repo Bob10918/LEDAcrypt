@@ -1,4 +1,4 @@
 #pragma once
 
-int DFR_test(POSITION_T LSparse[N0][V],
+int OQS_NAMESPACE_DFR_test(POSITION_T LSparse[N0][V],
              uint8_t *secondIterThreshold);

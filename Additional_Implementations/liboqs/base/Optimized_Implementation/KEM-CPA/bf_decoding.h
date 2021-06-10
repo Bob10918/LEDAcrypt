@@ -40,7 +40,7 @@
 #define              ITERATIONS_MAX   (4)
 #endif
 
-int bf_decoding_CT(DIGIT out[],
+int OQS_NAMESPACE_bf_decoding_CT(DIGIT out[],
                    const POSITION_T HtrPosOnes[N0][V],
                    const POSITION_T HPosOnes[N0][V],
                    DIGIT privateSyndrome[]);

@@ -84,9 +84,9 @@
 
 #define MIN_TOOM_DIGITS ((P+DIGIT_SIZE_b-1)/DIGIT_SIZE_b)
 #if (defined HIGH_PERFORMANCE_X86_64)
-#define GF2X_MUL gf2x_mul_TC3
+#define GF2X_MUL OQS_NAMESPACE_gf2x_mul_TC3
 #else
-#define GF2X_MUL gf2x_mul_Kar
+#define GF2X_MUL OQS_NAMESPACE_gf2x_mul_Kar
 #endif
 /*----------------------------------------------------------------------------*/
 

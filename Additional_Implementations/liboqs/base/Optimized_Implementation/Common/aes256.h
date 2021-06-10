@@ -35,7 +35,7 @@
 #define NROUNDS 14
 #define KEYLEN_b 256
 
-int rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[],
+int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[],
                         int keyBits);
-void rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
+void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
                      const uint8_t pt[16], uint8_t ct[16]);

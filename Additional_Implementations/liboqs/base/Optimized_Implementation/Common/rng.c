@@ -47,7 +47,7 @@
 /*----------------------------------------------------------------------------*/
 
 
-void initialize_pseudo_random_generator_seed(int seedFixed, char *seed)
+void OQS_NAMESPACE_initialize_pseudo_random_generator_seed(int seedFixed, char *seed)
 {
 
    if (seedFixed == 1)
@@ -59,7 +59,7 @@ void initialize_pseudo_random_generator_seed(int seedFixed, char *seed)
    } // end else-if
    unsigned char pseudo_entropy[48];
    for (int i=0; i< 48; i++) pseudo_entropy[i] = rand() & 0xff;
-   randombytes_init(pseudo_entropy,
+   OQS_NAMESPACE_randombytes_init(pseudo_entropy,
                     NULL,
                     0 /*unused in NIST function*/);
 
@@ -80,18 +80,18 @@ void initialize_pseudo_random_generator_seed(int seedFixed, char *seed)
 
 AES256_CTR_DRBG_struct  DRBG_ctx;
 
-void    AES256_ECB(unsigned char *key, unsigned char *ctr,
+void    OQS_NAMESPACE_AES256_ECB(unsigned char *key, unsigned char *ctr,
                    unsigned char *buffer);
 
 /*
- seedexpander_init()
+ OQS_NAMESPACE_seedexpander_init()
  ctx            - stores the current state of an instance of the seed expander
  seed           - a 32 byte random value
  diversifier    - an 8 byte diversifier
  maxlen         - maximum number of bytes (less than 2**32) generated under this seed and diversifier
  */
 int
-seedexpander_init(AES_XOF_struct *ctx,
+OQS_NAMESPACE_seedexpander_init(AES_XOF_struct *ctx,
                   unsigned char *seed,
                   unsigned char *diversifier,
                   unsigned long maxlen)
@@ -122,13 +122,13 @@ seedexpander_init(AES_XOF_struct *ctx,
 }
 
 /*
- seedexpander()
+ OQS_NAMESPACE_seedexpander()
     ctx  - stores the current state of an instance of the seed expander
     x    - returns the XOF data
     xlen - number of bytes to return
  */
 int
-seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen)
+OQS_NAMESPACE_seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen)
 {
    unsigned long   offset;
 
@@ -153,7 +153,7 @@ seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen)
       xlen -= 16-ctx->buffer_pos;
       offset += 16-ctx->buffer_pos;
 
-      AES256_ECB(ctx->key, ctx->ctr, ctx->buffer);
+      OQS_NAMESPACE_AES256_ECB(ctx->key, ctx->ctr, ctx->buffer);
       ctx->buffer_pos = 0;
 
       //increment the counter
@@ -177,15 +177,15 @@ seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen)
 //    ctx - a 128-bit ciphertext value
 
 void
-AES256_ECB(unsigned char *key, unsigned char *ptx, unsigned char *ctx)
+OQS_NAMESPACE_AES256_ECB(unsigned char *key, unsigned char *ptx, unsigned char *ctx)
 {
    uint32_t round_key[4*(NROUNDS + 1)] = {0x00};
-   rijndaelKeySetupEnc(round_key, key, KEYLEN_b);
-   rijndaelEncrypt(round_key, NROUNDS, ptx, ctx);
+   OQS_NAMESPACE_rijndaelKeySetupEnc(round_key, key, KEYLEN_b);
+   OQS_NAMESPACE_rijndaelEncrypt(round_key, NROUNDS, ptx, ctx);
 }
 
 void
-randombytes_init(unsigned char *entropy_input,
+OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input,
                  unsigned char *personalization_string,
                  int security_strength)
 {
@@ -197,12 +197,12 @@ randombytes_init(unsigned char *entropy_input,
          seed_material[i] ^= personalization_string[i];
    memset(DRBG_ctx.Key, 0x00, 32);
    memset(DRBG_ctx.Vee, 0x00, 16);
-   AES256_CTR_DRBG_Update(seed_material, DRBG_ctx.Key, DRBG_ctx.Vee);
+   OQS_NAMESPACE_AES256_CTR_DRBG_Update(seed_material, DRBG_ctx.Key, DRBG_ctx.Vee);
    DRBG_ctx.reseed_counter = 1;
 }
 
 int
-randombytes(unsigned char *x, unsigned long long xlen)
+OQS_NAMESPACE_randombytes(unsigned char *x, unsigned long long xlen)
 {
    unsigned char   block[16];
    int             i = 0;
@@ -217,7 +217,7 @@ randombytes(unsigned char *x, unsigned long long xlen)
             break;
          }
       }
-      AES256_ECB(DRBG_ctx.Key, DRBG_ctx.Vee, block);
+      OQS_NAMESPACE_AES256_ECB(DRBG_ctx.Key, DRBG_ctx.Vee, block);
       if ( xlen > 15 ) {
          memcpy(x+i, block, 16);
          i += 16;
@@ -227,14 +227,14 @@ randombytes(unsigned char *x, unsigned long long xlen)
          xlen = 0;
       }
    }
-   AES256_CTR_DRBG_Update(NULL, DRBG_ctx.Key, DRBG_ctx.Vee);
+   OQS_NAMESPACE_AES256_CTR_DRBG_Update(NULL, DRBG_ctx.Key, DRBG_ctx.Vee);
    DRBG_ctx.reseed_counter++;
 
    return RNG_SUCCESS;
 }
 
 void
-AES256_CTR_DRBG_Update(unsigned char *provided_data,
+OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
                        unsigned char *Key,
                        unsigned char *Vee)
 {
@@ -251,7 +251,7 @@ AES256_CTR_DRBG_Update(unsigned char *provided_data,
          }
       }
 
-      AES256_ECB(Key, Vee, temp+16*i);
+      OQS_NAMESPACE_AES256_ECB(Key, Vee, temp+16*i);
    }
    if ( provided_data != NULL )
       for (int i=0; i<48; i++)
@@ -262,7 +262,7 @@ AES256_CTR_DRBG_Update(unsigned char *provided_data,
 
 
 
-void deterministic_random_byte_generator(unsigned char *const output,
+void OQS_NAMESPACE_deterministic_random_byte_generator(unsigned char *const output,
       const unsigned long long output_len,
       const unsigned char *const seed,
       const unsigned long long seed_length
@@ -276,10 +276,10 @@ void deterministic_random_byte_generator(unsigned char *const output,
 
    memset(ctx.Key, 0x00, 32);
    memset(ctx.Vee, 0x00, 16);
-   AES256_CTR_DRBG_Update(seed_material, ctx.Key, ctx.Vee);
+   OQS_NAMESPACE_AES256_CTR_DRBG_Update(seed_material, ctx.Key, ctx.Vee);
    ctx.reseed_counter = 1;
 
-   /* Actual DRBG computation as from the randombytes(unsigned char *x,
+   /* Actual DRBG computation as from the OQS_NAMESPACE_randombytes(unsigned char *x,
     * unsigned long long xlen) from NIST */
 
    unsigned char   block[16];
@@ -297,7 +297,7 @@ void deterministic_random_byte_generator(unsigned char *const output,
             break;
          }
       }
-      AES256_ECB(ctx.Key, ctx.Vee, block);
+      OQS_NAMESPACE_AES256_ECB(ctx.Key, ctx.Vee, block);
       if ( length_remaining > 15 ) {
          memcpy(output+i, block, 16);
          i += 16;
@@ -307,12 +307,12 @@ void deterministic_random_byte_generator(unsigned char *const output,
          length_remaining = 0;
       }
    }
-   AES256_CTR_DRBG_Update(NULL, ctx.Key, ctx.Vee);
+   OQS_NAMESPACE_AES256_CTR_DRBG_Update(NULL, ctx.Key, ctx.Vee);
    ctx.reseed_counter++;
 
-} // end deterministic_random_byte_generator
+} // end OQS_NAMESPACE_deterministic_random_byte_generator
 
-void seedexpander_from_trng(AES_XOF_struct *ctx,
+void OQS_NAMESPACE_seedexpander_from_trng(AES_XOF_struct *ctx,
                             const unsigned char *trng_entropy
                             /* TRNG_BYTE_LENGTH wide buffer */)
 {
@@ -331,7 +331,7 @@ void seedexpander_from_trng(AES_XOF_struct *ctx,
 #endif
    /* the required seed expansion will be quite small, set the max number of
     * bytes conservatively to 10 MiB*/
-   seedexpander_init(ctx,prng_buffer,diversifier,10*1024*1024);
+   OQS_NAMESPACE_seedexpander_init(ctx,prng_buffer,diversifier,10*1024*1024);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -341,7 +341,7 @@ void seedexpander_from_trng(AES_XOF_struct *ctx,
  * the NIST seedexpander seeded with the proper key.
  * Assumes that the maximum value for the range n is 2^32-1
  */
-int rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx)
+int OQS_NAMESPACE_rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx)
 {
 
    unsigned long required_rnd_bytes = (logn+7)/8;
@@ -350,7 +350,7 @@ int rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx)
    uint32_t mask = ( (uint32_t)1 << logn) - 1;
 
    do {
-      seedexpander(seed_expander_ctx, rnd_char_buffer, required_rnd_bytes);
+      OQS_NAMESPACE_seedexpander(seed_expander_ctx, rnd_char_buffer, required_rnd_bytes);
       /* obtain an endianness independent representation of the generated random
        bytes into an unsigned integer */
       rnd_value =  ((uint32_t)rnd_char_buffer[3] << 24) +
@@ -361,9 +361,9 @@ int rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx)
    } while (rnd_value >= n);
 
    return rnd_value;
-} // end rand_range
+} // end OQS_NAMESPACE_rand_range
 
-void shake_seedexpander_init(xof_shake_t *st,
+void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
                              const unsigned char *trng_entropy
                              /* TRNG_BYTE_LENGTH wide buffer */)
 {
@@ -391,9 +391,9 @@ void shake_seedexpander_init(xof_shake_t *st,
 #endif
 
     st->idx = 0;
-} // end shake_seedexpander_init
+} // end OQS_NAMESPACE_shake_seedexpander_init
 
-void shake_seedexpander_extract(xof_shake_t *st,
+void OQS_NAMESPACE_shake_seedexpander_extract(xof_shake_t *st,
                                 unsigned char *output,
                                 unsigned int outputByteLen)
 {
@@ -430,9 +430,9 @@ void shake_seedexpander_extract(xof_shake_t *st,
             outIdx += 1;
         } // end for
     } // end while
-} // end shake_seedexpander_extract
+} // end OQS_NAMESPACE_shake_seedexpander_extract
 
-int rand_range_shake(const int n, const int logn, xof_shake_t *st)
+int OQS_NAMESPACE_rand_range_shake(const int n, const int logn, xof_shake_t *st)
 {
    unsigned long required_rnd_bytes = (logn+7)/8;
    unsigned char rnd_char_buffer[4];
@@ -440,7 +440,7 @@ int rand_range_shake(const int n, const int logn, xof_shake_t *st)
    uint32_t mask = ( (uint32_t)1 << logn) - 1;
 
    do {
-      shake_seedexpander_extract(st, rnd_char_buffer, required_rnd_bytes);
+      OQS_NAMESPACE_shake_seedexpander_extract(st, rnd_char_buffer, required_rnd_bytes);
       /* obtain an endianness independent representation of the generated random
        bytes into an unsigned integer */
       rnd_value =  ((uint32_t)rnd_char_buffer[3] << 24) +
@@ -451,4 +451,4 @@ int rand_range_shake(const int n, const int logn, xof_shake_t *st)
    } while (rnd_value >= n);
 
    return rnd_value;
-} // end rand_range_shake
+} // end OQS_NAMESPACE_rand_range_shake

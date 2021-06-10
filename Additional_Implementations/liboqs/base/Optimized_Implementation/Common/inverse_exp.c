@@ -77,7 +77,7 @@ to be expanded and folded back. The value is to be subtracted from  */
 #define LOW_HALFWORD_MASK ( ((DIGIT)1 << (DIGIT_SIZE_b/2))-1)
 
 /* AVX2 based bit interleaving CLMUL */
-void pow_2_A(DIGIT *poly_sq, DIGIT *poly)
+void OQS_NAMESPACE_pow_2_A(DIGIT *poly_sq, DIGIT *poly)
 {
 
    alignas(32) DIGIT tmp[2*NUM_DIGITS_GF2X_ELEMENT] = {0};
@@ -115,12 +115,12 @@ void pow_2_A(DIGIT *poly_sq, DIGIT *poly)
 #endif
       outidx=outidx-4;
    }
-   gf2x_mod(poly_sq,2*NUM_DIGITS_GF2X_ELEMENT, tmp);
+   OQS_NAMESPACE_gf2x_mod(poly_sq,2*NUM_DIGITS_GF2X_ELEMENT, tmp);
    return;
 }
 
-#define SQUARE_IMPLEMENTATION pow_2_A
-void raise_2_i_clmul(DIGIT *a, int i)
+#define SQUARE_IMPLEMENTATION OQS_NAMESPACE_pow_2_A
+void OQS_NAMESPACE_raise_2_i_clmul(DIGIT *a, int i)
 {
    int64_t actual_exp = 1 << i;
    for (int j = 0; j < actual_exp; j++) {
@@ -130,7 +130,7 @@ void raise_2_i_clmul(DIGIT *a, int i)
 
 #if defined(HIGH_PERFORMANCE_X86_64)
 #include "inverse_perm_tables.h"
-void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
+void OQS_NAMESPACE_raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
 {
    DIGIT tmp[NUM_DIGITS_GF2X_ELEMENT];
    memcpy(tmp, a, NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B);
@@ -141,7 +141,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
          d_inDigitIdx < DIGIT_SIZE_b;
          d_inDigitIdx++) {
       unsigned int s_straightIdx =
-         inverse_index_permutation_table[tableindex][d_inDigitIdx];
+         OQS_NAMESPACE_inverse_index_permutation_table[tableindex][d_inDigitIdx];
       unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
       unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
       DIGIT to_move = (tmp[s_digitIdx] >> (DIGIT_SIZE_b-1-s_inDigitIdx)) & ((
@@ -157,7 +157,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
       d_digit=0;
       for( d_inDigitIdx = 0; d_inDigitIdx < DIGIT_SIZE_b; d_inDigitIdx++) {
          unsigned int s_straightIdx =
-            inverse_index_permutation_table[tableindex][d_digit_idx*DIGIT_SIZE_b +
+            OQS_NAMESPACE_inverse_index_permutation_table[tableindex][d_digit_idx*DIGIT_SIZE_b +
                   d_inDigitIdx];
          unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
          unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
@@ -178,7 +178,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
                                      0 *DIGIT_SIZE_b +
                                      d_inDigitIdx;
          unsigned int s_straightIdx =
-            inverse_index_permutation_table[tableindex][tableElemIdx];
+            OQS_NAMESPACE_inverse_index_permutation_table[tableindex][tableElemIdx];
          unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
          unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
          DIGIT to_move = (tmp[s_digitIdx] >> (DIGIT_SIZE_b-1-s_inDigitIdx)) & ((
@@ -193,7 +193,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
                                      1 *DIGIT_SIZE_b +
                                      d_inDigitIdx;
          unsigned int s_straightIdx =
-            inverse_index_permutation_table[tableindex][tableElemIdx];
+            OQS_NAMESPACE_inverse_index_permutation_table[tableindex][tableElemIdx];
          unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
          unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
          DIGIT to_move = (tmp[s_digitIdx] >> (DIGIT_SIZE_b-1-s_inDigitIdx)) & ((
@@ -208,7 +208,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
                                      2 *DIGIT_SIZE_b +
                                      d_inDigitIdx;
          unsigned int s_straightIdx =
-            inverse_index_permutation_table[tableindex][tableElemIdx];
+            OQS_NAMESPACE_inverse_index_permutation_table[tableindex][tableElemIdx];
          unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
          unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
          DIGIT to_move = (tmp[s_digitIdx] >> (DIGIT_SIZE_b-1-s_inDigitIdx)) & ((
@@ -223,7 +223,7 @@ void raise_2_i_inverse_perm_table_linsweep(DIGIT *a, int tableindex)
                                      3 *DIGIT_SIZE_b +
                                      d_inDigitIdx;
          unsigned int s_straightIdx =
-            inverse_index_permutation_table[tableindex][tableElemIdx];
+            OQS_NAMESPACE_inverse_index_permutation_table[tableindex][tableElemIdx];
          unsigned int s_digitIdx = s_straightIdx / DIGIT_SIZE_b;
          unsigned int s_inDigitIdx = s_straightIdx % DIGIT_SIZE_b;
          DIGIT to_move = (tmp[s_digitIdx] >> (DIGIT_SIZE_b-1-s_inDigitIdx)) & ((
@@ -249,20 +249,20 @@ void raise_2_i_factor_inverse_permute(DIGIT *a, int tableindex)
 #endif
 
 #define RAISE_2_I_TRADEOFF_TH (5)
-void raise_2_i_hybrid(DIGIT *a, int i)
+void OQS_NAMESPACE_raise_2_i_hybrid(DIGIT *a, int i)
 {
    if (i <= RAISE_2_I_TRADEOFF_TH) {
-      raise_2_i_clmul(a,i);
+      OQS_NAMESPACE_raise_2_i_clmul(a,i);
    } else {
 #if defined(HIGH_PERFORMANCE_X86_64)
-      raise_2_i_inverse_perm_table_linsweep(a,i);
+      OQS_NAMESPACE_raise_2_i_inverse_perm_table_linsweep(a,i);
 #else
       raise_2_i_factor_inverse_permute(a,i);
 #endif
    }
 }
 
-void gf2x_mod_inverse_exp(DIGIT *polyInv, DIGIT *poly)
+void OQS_NAMESPACE_gf2x_mod_inverse_exp(DIGIT *polyInv, DIGIT *poly)
 {
    uint64_t p = P - 2;
    int i = 1;
@@ -286,12 +286,12 @@ void gf2x_mod_inverse_exp(DIGIT *polyInv, DIGIT *poly)
          temp[j] = a[j];
       }
       //a^2^2^(i-1)
-      raise_2_i_hybrid(a,i - 1);
-      gf2x_mod_mul(a, a, temp);
+      OQS_NAMESPACE_raise_2_i_hybrid(a,i - 1);
+      OQS_NAMESPACE_gf2x_mod_mul(a, a, temp);
       if (p & 1) {
          //b^2^2^i
-         raise_2_i_hybrid(b,i);
-         gf2x_mod_mul(b, b, a);
+         OQS_NAMESPACE_raise_2_i_hybrid(b,i);
+         OQS_NAMESPACE_gf2x_mod_mul(b, b, a);
       }
       p >>= 1;
       i++;

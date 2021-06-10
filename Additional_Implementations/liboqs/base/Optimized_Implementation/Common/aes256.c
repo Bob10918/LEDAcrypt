@@ -53,7 +53,7 @@ static inline __m128i aes128_keyexpand(__m128i key)
 #define KEYEXP256_2(K1, K2) KEYEXP128_H(K1, K2, 0x00, 0xaa)
 
 int
-rijndaelKeySetupEnc(uint32_t enc_keyschedule[/*4*(Nr + 1)*/],
+OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t enc_keyschedule[/*4*(Nr + 1)*/],
                     const uint8_t k[], int keyBits)
 {
    ((__m128i *)enc_keyschedule)[0] = _mm_loadu_si128((const __m128i *) k);
@@ -89,7 +89,7 @@ rijndaelKeySetupEnc(uint32_t enc_keyschedule[/*4*(Nr + 1)*/],
 }
 
 void
-rijndaelEncrypt(const uint32_t enc_keyschedule[/*4*(Nr + 1)*/],int Nr,
+OQS_NAMESPACE_rijndaelEncrypt(const uint32_t enc_keyschedule[/*4*(Nr + 1)*/],int Nr,
                 const uint8_t pt[16], uint8_t ct[16])
 {
    __m128i m = _mm_loadu_si128((__m128i *)pt);
@@ -469,7 +469,7 @@ static const uint32_t rcon[] = {
  *
  * @return	the number of rounds for the given cipher key size.
  */
-int rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[],
+int OQS_NAMESPACE_rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[],
                         int keyBits)
 {
    int i = 0;
@@ -512,7 +512,7 @@ int rijndaelKeySetupEnc(uint32_t rk[/*4*(Nr + 1)*/], const uint8_t cipherKey[],
    return 0;
 }
 
-void rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
+void OQS_NAMESPACE_rijndaelEncrypt(const uint32_t rk[/*4*(Nr + 1)*/], int Nr,
                      const uint8_t pt[16], uint8_t ct[16])
 {
    uint32_t s0, s1, s2, s3, t0=0, t1=0, t2=0, t3=0;

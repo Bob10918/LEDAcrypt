@@ -43,14 +43,14 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
 {
    DIGIT saux[NUM_DIGITS_GF2X_ELEMENT];
 
-   gf2x_mod_mul(syndrome, pk->Mtr,err);
+   OQS_NAMESPACE_gf2x_mod_mul(syndrome, pk->Mtr,err);
    for (int i = 1; i < N0-1; i++) {
-      gf2x_mod_mul(saux,
+      OQS_NAMESPACE_gf2x_mod_mul(saux,
                    pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                    err+NUM_DIGITS_GF2X_ELEMENT*i);
-      gf2x_mod_add(syndrome, syndrome, saux);
+      OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, saux);
    }
-   gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
+   OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
 } // end encrypt_niederreiter
 #else
 static
@@ -72,27 +72,27 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
             filled++;
          }
       }
-      gf2x_mod_mul_dense_to_sparse(saux,
+      OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(saux,
                                    pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                                    blkErrorPos,
                                    filled);
-      gf2x_mod_add(syndrome, syndrome, saux);
+      OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, saux);
    }  // end for
-   gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
+   OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
 } // end encrypt_niederreiter
 
 #endif
 
 /*----------------------------------------------------------------------------*/
 
-void encrypt_niederreiter_indcca2(unsigned char *const
+void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
                                   ct,  /* ciphertext - output    */
                                   unsigned char *const ss,  /* shared secret - output */
                                   const publicKeyNiederreiter_t *const pk)
 {
 
    unsigned char seed[TRNG_BYTE_LENGTH];
-   randombytes(seed, TRNG_BYTE_LENGTH);
+   OQS_NAMESPACE_randombytes(seed, TRNG_BYTE_LENGTH);
 
    unsigned char ss_input[2*TRNG_BYTE_LENGTH] = {0};
    memcpy(ss_input, seed, TRNG_BYTE_LENGTH);
@@ -122,11 +122,11 @@ void encrypt_niederreiter_indcca2(unsigned char *const
 
    AES_XOF_struct hashedAndTruncatedSeed_expander;
    memset(&hashedAndTruncatedSeed_expander, 0x00, sizeof(AES_XOF_struct));
-   seedexpander_from_trng(&hashedAndTruncatedSeed_expander,
+   OQS_NAMESPACE_seedexpander_from_trng(&hashedAndTruncatedSeed_expander,
                           hashedAndTruncatedSeed);
 
    POSITION_T errorPos[NUM_ERRORS_T];
-   rand_error_pos(errorPos, &hashedAndTruncatedSeed_expander);
+   OQS_NAMESPACE_rand_error_pos(errorPos, &hashedAndTruncatedSeed_expander);
 
    DIGIT error_vector[N0*NUM_DIGITS_GF2X_ELEMENT];
    expand_error(error_vector, errorPos);
@@ -162,7 +162,7 @@ void encrypt_niederreiter_indcca2(unsigned char *const
           maskedSeed,
           TRNG_BYTE_LENGTH);
 
-} // end encrypt_niederreiter_indcca2
+} // end OQS_NAMESPACE_encrypt_niederreiter_indcca2
 
 /*----------------------------------------------------------------------------*/
 

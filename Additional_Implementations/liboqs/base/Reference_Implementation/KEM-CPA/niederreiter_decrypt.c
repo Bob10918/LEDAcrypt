@@ -21,11 +21,11 @@ int OQS_NAMESPACE_decrypt_niederreiter_indcpa(unsigned char *const ss,          
 
    unsigned char decoded_error_vector[1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B] = { 0x00 };
    DIGIT privateSyndrome[NUM_DIGITS_GF2X_ELEMENT];
-   gf2x_mod_mul_dense_to_sparse(privateSyndrome,
+   OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(privateSyndrome,
                                 (const DIGIT * const) ct,
                                 sk->HtrPosOnes[N0-1],
                                 V);
-   int decode_ok = bf_decoding(((DIGIT *)(&decoded_error_vector[1])),
+   int decode_ok = OQS_NAMESPACE_bf_decoding(((DIGIT *)(&decoded_error_vector[1])),
                                (const POSITION_T (*)[V]) sk->HtrPosOnes,
                                privateSyndrome);
    // decode_ok == 1 means that no decoding failure occurred
@@ -46,16 +46,16 @@ int OQS_NAMESPACE_decrypt_niederreiter_indcpa(unsigned char *const ss,          
       reconstructed_err_vect_seed[i] = tag[i] ^ tagMask[i];
 
    xof_shake_t test_err_vect_seed_expander;
-   shake_seedexpander_init(&test_err_vect_seed_expander,
+   OQS_NAMESPACE_shake_seedexpander_init(&test_err_vect_seed_expander,
                            reconstructed_err_vect_seed);
    POSITION_T test_errorPos[NUM_ERRORS_T];
-   rand_error_pos_shake(test_errorPos,
+   OQS_NAMESPACE_rand_error_pos_shake(test_errorPos,
                         &test_err_vect_seed_expander);
 
 
    unsigned char test_err_vect[1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B];
    test_err_vect[0]=0x00;
-   expand_error(((DIGIT *)(&test_err_vect[1])),
+   OQS_NAMESPACE_expand_error(((DIGIT *)(&test_err_vect[1])),
                 test_errorPos);
 
    int error_value_ok = memcmp(decoded_error_vector,

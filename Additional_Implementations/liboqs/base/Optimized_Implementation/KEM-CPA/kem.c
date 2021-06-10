@@ -34,6 +34,7 @@
 #include "rng.h"
 #include "fips202.h"
 #include <string.h>
+#include <stdio.h>
 
 /*----------------------------------------------------------------------------*/
 /* Generates a keypair - pk is the public key and
@@ -42,8 +43,7 @@
 int OQS_NAMESPACE_crypto_kem_keypair( unsigned char *pk,
                         unsigned char *sk )
 {
-
-   key_gen_niederreiter((publicKeyNiederreiter_t *) pk,
+   OQS_NAMESPACE_key_gen_niederreiter((publicKeyNiederreiter_t *) pk,
                         (privateKeyNiederreiter_t *) sk);
    return 0;
 } // end crypto_kem_keypair
@@ -58,7 +58,7 @@ int OQS_NAMESPACE_crypto_kem_enc( unsigned char *ct,
                     const unsigned char *pk )
 {
 
-   encrypt_niederreiter_indcpa((unsigned char *const) ct,
+   OQS_NAMESPACE_encrypt_niederreiter_indcpa((unsigned char *const) ct,
                                (unsigned char *const) (ct+NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
                                (unsigned char *const) ss,
                                (const publicKeyNiederreiter_t *const) pk);
@@ -76,7 +76,7 @@ int OQS_NAMESPACE_crypto_kem_dec( unsigned char *ss,
                     const unsigned char *sk )
 {
    int decryption_ok;
-   decryption_ok = (1 == decrypt_niederreiter_indcpa((unsigned char *const) ss,
+   decryption_ok = (1 == OQS_NAMESPACE_decrypt_niederreiter_indcpa((unsigned char *const) ss,
                     (const unsigned char *const) ct,
                     (const unsigned char *const) (ct+NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),
                     (const privateKeyNiederreiter_t *const) sk));

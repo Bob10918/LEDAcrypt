@@ -39,10 +39,10 @@
 #if (defined CONSTANT_TIME)
 /* The second threshold is updated before decoding retrieving it from the
 * private key field secondIterThreshold*/
-int thresholds[2] = {B0, (V)/2+1};
+int OQS_NAMESPACE_thresholds[2] = {B0, (V)/2+1};
 #endif
 
-void lift_mul_dense_to_sparse_CT(bs_operand_t bs_res[],
+void OQS_NAMESPACE_lift_mul_dense_to_sparse_CT(bs_operand_t bs_res[],
                                  // NUM_DIGITS_GF2X_ELEMENT/(NUM_BITS_IN_BITSLICED_OP/DIGIT_SIZE_b) wide
                                  const DIGIT dense[],
                                  const POSITION_T sparse[],
@@ -54,9 +54,9 @@ void lift_mul_dense_to_sparse_CT(bs_operand_t bs_res[],
       /* note : last words of tmp will be intentionally garbage, in case
        * NUM_DIGITS_GF2X_ELEMENT is not divisible by 4, for alignment reasons
        * Their content won't be used */
-      gf2x_mod_mul_monom((DIGIT *)tmp,sparse[i],dense);
+      OQS_NAMESPACE_gf2x_mod_mul_monom((DIGIT *)tmp,sparse[i],dense);
 #else
-      gf2x_mod_mul_monom(tmp,sparse[i],dense);
+      OQS_NAMESPACE_gf2x_mod_mul_monom(tmp,sparse[i],dense);
 #endif
       for(int j = 0 ; j < NUM_SLICES_GF2X_ELEMENT; j++) {
          bs_res[j] = bitslice_inc(bs_res[j], tmp[j]);
@@ -70,7 +70,7 @@ void lift_mul_dense_to_sparse_CT(bs_operand_t bs_res[],
 #define DENSE_H
 #endif
 
-int bf_decoding_CT(DIGIT out[],
+int OQS_NAMESPACE_bf_decoding_CT(DIGIT out[],
                    const POSITION_T HtrPosOnes[N0][V],
                    const POSITION_T HPosOnes[N0][V],
                    DIGIT privateSyndrome[])
@@ -90,7 +90,7 @@ int bf_decoding_CT(DIGIT out[],
    /* densify HTr*/
    DIGIT HTr[N0][NUM_DIGITS_GF2X_ELEMENT] = {{0}};
    for(int i=0; i<N0; i++) {
-      gf2x_mod_densify_CT(HTr[i],HtrPosOnes[i],V);
+      OQS_NAMESPACE_gf2x_mod_densify_CT(HTr[i],HtrPosOnes[i],V);
    }
 #endif
 
@@ -124,7 +124,7 @@ int bf_decoding_CT(DIGIT out[],
 #else
       /* Fixed threshold per iteration */
       bs_operand_t sliced_threshold;
-      uint16_t cut_neg_threshold = (uint16_t) (-thresholds[iteration]);
+      uint16_t cut_neg_threshold = (uint16_t) (-OQS_NAMESPACE_thresholds[iteration]);
       sliced_threshold = slice_constant(cut_neg_threshold);
 #endif
       /* preload UPCs to -threshold */
@@ -133,7 +133,7 @@ int bf_decoding_CT(DIGIT out[],
       }
 
       for (int i = 0; i < N0; i++) {
-         lift_mul_dense_to_sparse_CT(bs_unsatParityChecks+(i*NUM_SLICES_GF2X_ELEMENT),
+         OQS_NAMESPACE_lift_mul_dense_to_sparse_CT(bs_unsatParityChecks+(i*NUM_SLICES_GF2X_ELEMENT),
                                      privateSyndrome,
                                      HPosOnes[i],
                                      V);
@@ -178,15 +178,15 @@ int bf_decoding_CT(DIGIT out[],
       DIGIT deltasynd_dense[NUM_DIGITS_GF2X_ELEMENT];
       for(int i = 0; i < N0; i++) {
 #if (defined HIGH_PERFORMANCE_X86_64)
-         gf2x_mod_mul(deltasynd_dense,
+         OQS_NAMESPACE_gf2x_mod_mul(deltasynd_dense,
                       HTr[i],
                       deltaerr+i*(NUM_SLICES_GF2X_ELEMENT*4));
 #else
-         gf2x_mod_mul(deltasynd_dense,
+         OQS_NAMESPACE_gf2x_mod_mul(deltasynd_dense,
                       HTr[i],
                       deltaerr+i*NUM_DIGITS_GF2X_ELEMENT);
 #endif
-         gf2x_mod_add(privateSyndrome,
+         OQS_NAMESPACE_gf2x_mod_add(privateSyndrome,
                       deltasynd_dense,
                       privateSyndrome);
       }
@@ -194,11 +194,11 @@ int bf_decoding_CT(DIGIT out[],
       for(int i = 0; i < N0; i++) {
          for(int HtrOneIdx = 0; HtrOneIdx < V; HtrOneIdx++) {
 #if (defined HIGH_PERFORMANCE_X86_64)
-            gf2x_mod_fmac(privateSyndrome,
+            OQS_NAMESPACE_gf2x_mod_fmac(privateSyndrome,
                           HtrPosOnes[i][HtrOneIdx],
                           deltaerr+i*(NUM_SLICES_GF2X_ELEMENT*4));
 #else
-            gf2x_mod_fmac(privateSyndrome,
+            OQS_NAMESPACE_gf2x_mod_fmac(privateSyndrome,
                           HtrPosOnes[i][HtrOneIdx],
                           deltaerr+i*NUM_DIGITS_GF2X_ELEMENT);
 #endif

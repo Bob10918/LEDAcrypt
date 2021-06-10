@@ -2,7 +2,7 @@
 
 #include "H_Q_matrices_generation.h"
 #include "gf2x_arith_mod_xPplusOne.h"
-#include "rng.h"
+#include "randombytes.h"
 
 #include <string.h>
 /*----------------------------------------------------------------------------*/
@@ -25,9 +25,9 @@ void OQS_NAMESPACE_key_gen_niederreiter(publicKeyNiederreiter_t  *const pk,
    randombytes(sk->LongTermSeed, TRNG_BYTE_LENGTH);
 
    randombytes(prng_seed, TRNG_BYTE_LENGTH);
-   seedexpander_from_trng(&niederreiter_keys_expander, prng_seed);
+   OQS_NAMESPACE_seedexpander_from_trng(&niederreiter_keys_expander, prng_seed);
 
-   generateHPosOnes(sk->HPosOnes, &niederreiter_keys_expander);
+   OQS_NAMESPACE_generateHPosOnes(sk->HPosOnes, &niederreiter_keys_expander);
 
    DIGIT Ln0dense[NUM_DIGITS_GF2X_ELEMENT] = {0x00};
    gf2x_mod_densify_VT(Ln0dense,sk->HPosOnes[N0-1],V);
@@ -36,16 +36,16 @@ void OQS_NAMESPACE_key_gen_niederreiter(publicKeyNiederreiter_t  *const pk,
    GF2X_DIGIT_MOD_INVERSE(Ln0Inv, Ln0dense);
 
    for (int i = 0; i < N0-1; i++) {
-      gf2x_mod_mul_dense_to_sparse(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
+      OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                                    Ln0Inv,
                                    sk->HPosOnes[i],
                                    V);
    }
    for (int i = 0; i < N0-1; i++) {
-      gf2x_transpose_in_place(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT);
+      OQS_NAMESPACE_gf2x_transpose_in_place(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT);
    }
 
-   transposeHPosOnes(sk->HtrPosOnes, (const POSITION_T(*)[V])sk->HPosOnes);
+   OQS_NAMESPACE_transposeHPosOnes(sk->HtrPosOnes, (const POSITION_T(*)[V])sk->HPosOnes);
 } // end key_gen_niederreiter
 
 /*----------------------------------------------------------------------------*/

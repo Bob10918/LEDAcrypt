@@ -34,7 +34,7 @@
 #include "gf2x_limbs.h"
 
 
-void encrypt_niederreiter_indcca2(unsigned char *const
+void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
                                   ct,  /* ciphertext - output    */
                                   unsigned char *const ss,  /* shared secret - output */
                                   const publicKeyNiederreiter_t *const pk);

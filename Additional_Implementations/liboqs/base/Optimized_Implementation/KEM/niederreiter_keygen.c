@@ -34,7 +34,7 @@
 #include "rng.h"
 #include "dfr_test.h"
 #include <string.h>
-/*----------------------------------------------------------------------------*/
+/*----------ul------------------------------------------------------------------*/
 /* Implementation that should never be optimized out by the compiler */
 static inline void zeroize( void *v, size_t n )
 {
@@ -44,32 +44,32 @@ static inline void zeroize( void *v, size_t n )
 
 /*----------------------------------------------------------------------------*/
 
-void key_gen_niederreiter(publicKeyNiederreiter_t   *const pk,
+void OQS_NAMESPACE_key_gen_niederreiter(publicKeyNiederreiter_t   *const pk,
                           privateKeyNiederreiter_t *const sk)
 {
    AES_XOF_struct keys_expander;
    memset(&keys_expander,0x00,sizeof(AES_XOF_struct));
-   randombytes(sk->prng_seed, TRNG_BYTE_LENGTH);
-   seedexpander_from_trng(&keys_expander, sk->prng_seed);
+   OQS_NAMESPACE_randombytes(sk->prng_seed, TRNG_BYTE_LENGTH);
+   OQS_NAMESPACE_seedexpander_from_trng(&keys_expander, sk->prng_seed);
 
    POSITION_T HPosOnes[N0][V];
 
    int isDFRok;
    sk->rejections = (uint8_t) 0;
    do {
-      generateHPosOnes(HPosOnes, &keys_expander);
+      OQS_NAMESPACE_generateHPosOnes(HPosOnes, &keys_expander);
       sk->rejections = sk->rejections + 1;
-      isDFRok = DFR_test(HPosOnes, &(sk->secondIterThreshold));
+      isDFRok = OQS_NAMESPACE_DFR_test(HPosOnes, &(sk->secondIterThreshold));
    } while(!isDFRok);
 
    sk->rejections = sk->rejections - 1;
 
-   seedexpander(&keys_expander,
+   OQS_NAMESPACE_seedexpander(&keys_expander,
                 sk->decryption_failure_secret,
                 (unsigned long)TRNG_BYTE_LENGTH);
 
    DIGIT Ln0dense[NUM_DIGITS_GF2X_ELEMENT] = {0x00};
-   gf2x_mod_densify_CT(Ln0dense,HPosOnes[N0-1],V);
+   OQS_NAMESPACE_gf2x_mod_densify_CT(Ln0dense,HPosOnes[N0-1],V);
 
    DIGIT Ln0Inv[NUM_DIGITS_GF2X_ELEMENT] = {0x00};
    GF2X_DIGIT_MOD_INVERSE(Ln0Inv, Ln0dense);
@@ -77,36 +77,36 @@ void key_gen_niederreiter(publicKeyNiederreiter_t   *const pk,
 #if (defined HIGH_PERFORMANCE_X86_64)
    for (int i = 0; i < N0-1; i++) {
       DIGIT Hdenseblock[NUM_DIGITS_GF2X_ELEMENT] = {0x00};
-      gf2x_mod_densify_CT(Hdenseblock,HPosOnes[i],V);
-      gf2x_mod_mul(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
+      OQS_NAMESPACE_gf2x_mod_densify_CT(Hdenseblock,HPosOnes[i],V);
+      OQS_NAMESPACE_gf2x_mod_mul(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                    (const DIGIT * const) Hdenseblock,
                    Ln0Inv);
    }
 #else
    for (int i = 0; i < N0-1; i++) {
-      gf2x_mod_mul_dense_to_sparse(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
+      OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                                    Ln0Inv,
                                    HPosOnes[i],
                                    V);
    }
 #endif
    for (int i = 0; i < N0-1; i++) {
-      gf2x_transpose_in_place(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT);
+      OQS_NAMESPACE_gf2x_transpose_in_place(pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT);
    }
-} // end key_gen_niederreiter
+} // end OQS_NAMESPACE_key_gen_niederreiter
 
 /*----------------------------------------------------------------------------*/
 
-void publicKey_deletion_niederreiter(publicKeyNiederreiter_t   *const pk)
+void OQS_NAMESPACE_publicKey_deletion_niederreiter(publicKeyNiederreiter_t   *const pk)
 {
    zeroize(pk,sizeof(publicKeyNiederreiter_t));
-} // publicKey_deletion_niederreiter
+} // OQS_NAMESPACE_publicKey_deletion_niederreiter
 
 /*----------------------------------------------------------------------------*/
 
-void privateKey_deletion_niederreiter(privateKeyNiederreiter_t *const sk)
+void OQS_NAMESPACE_privateKey_deletion_niederreiter(privateKeyNiederreiter_t *const sk)
 {
    zeroize(sk, sizeof(privateKeyNiederreiter_t));
-} // privateKey_deletion_niederreiter
+} // OQS_NAMESPACE_privateKey_deletion_niederreiter
 
 /*----------------------------------------------------------------------------*/

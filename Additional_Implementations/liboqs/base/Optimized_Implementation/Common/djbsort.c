@@ -179,7 +179,7 @@ static long long int32_threestages(int32 *x,long long n,long long q)
 
 /* n is a power of 2; n >= 8; if n == 8 then flagdown */
 __attribute__((noinline))
-static void int32_sort_2power(int32 *x,long long n,int flagdown)
+static void OQS_NAMESPACE_int32_sort_2power(int32 *x,long long n,int flagdown)
 {
    long long p,q,i,j,k;
    int32x8 mask;
@@ -314,8 +314,8 @@ static void int32_sort_2power(int32 *x,long long n,int flagdown)
    if (n == 32) {
       int32x8 x0,x1,x2,x3;
 
-      int32_sort_2power(x,16,1);
-      int32_sort_2power(x + 16,16,0);
+      OQS_NAMESPACE_int32_sort_2power(x,16,1);
+      OQS_NAMESPACE_int32_sort_2power(x + 16,16,0);
 
       x0 = int32x8_load(&x[0]);
       x1 = int32x8_load(&x[8]);
@@ -892,7 +892,7 @@ static void int32_sort_2power(int32 *x,long long n,int flagdown)
    }
 }
 
-void int32_sort(int32 *x,long long n)
+void OQS_NAMESPACE_int32_sort(int32 *x,long long n)
 {
    long long q,i,j;
 
@@ -943,7 +943,7 @@ void int32_sort(int32 *x,long long n)
    }
 
    if (!(n & (n - 1))) {
-      int32_sort_2power(x,n,0);
+      OQS_NAMESPACE_int32_sort_2power(x,n,0);
       return;
    }
 
@@ -955,13 +955,13 @@ void int32_sort(int32 *x,long long n)
       int32x8 y[32];
       for (i = q>>3; i < q>>2; ++i) y[i] = _mm256_set1_epi32(0x7fffffff);
       for (i = 0; i < n; ++i) i[(int32 *) y] = x[i];
-      int32_sort_2power((int32 *) y,2*q,0);
+      OQS_NAMESPACE_int32_sort_2power((int32 *) y,2*q,0);
       for (i = 0; i < n; ++i) x[i] = i[(int32 *) y];
       return;
    }
 
-   int32_sort_2power(x,q,1);
-   int32_sort(x + q,n - q);
+   OQS_NAMESPACE_int32_sort_2power(x,q,1);
+   OQS_NAMESPACE_int32_sort(x + q,n - q);
 
    while (q >= 64) {
       q >>= 2;
@@ -1218,7 +1218,7 @@ do { \
 } while(0)
 
 
-void int32_sort(int32 *x,long long n)
+void OQS_NAMESPACE_int32_sort(int32 *x,long long n)
 {
    long long top,p,q,r,i,j;
 

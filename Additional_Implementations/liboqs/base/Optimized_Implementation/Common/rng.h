@@ -59,38 +59,38 @@ typedef struct {
 
 
 void
-AES256_CTR_DRBG_Update(unsigned char *provided_data,
+OQS_NAMESPACE_AES256_CTR_DRBG_Update(unsigned char *provided_data,
                        unsigned char *Key,
                        unsigned char *Vee);
 
 int
-seedexpander_init(AES_XOF_struct *ctx,
+OQS_NAMESPACE_seedexpander_init(AES_XOF_struct *ctx,
                   unsigned char *seed,
                   unsigned char *diversifier,
                   unsigned long maxlen);
 
 int
-seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen);
+OQS_NAMESPACE_seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long xlen);
 
 void
-randombytes_init(unsigned char *entropy_input,
+OQS_NAMESPACE_randombytes_init(unsigned char *entropy_input,
                  unsigned char *personalization_string,
                  int security_strength);
 
 int
-randombytes(unsigned char *x, unsigned long long xlen);
+OQS_NAMESPACE_randombytes(unsigned char *x, unsigned long long xlen);
 
 /******  End of NIST supplied code ****************/
 #include "fips202.h"
 
-void initialize_pseudo_random_generator_seed(int seedFixed, char *seed);
+void OQS_NAMESPACE_initialize_pseudo_random_generator_seed(int seedFixed, char *seed);
 
-void deterministic_random_byte_generator(unsigned char *const output,
+void OQS_NAMESPACE_deterministic_random_byte_generator(unsigned char *const output,
       const unsigned long long output_len,
       const unsigned char *const seed,
       const unsigned long long seed_length);
 
-void seedexpander_from_trng(AES_XOF_struct *ctx,
+void OQS_NAMESPACE_seedexpander_from_trng(AES_XOF_struct *ctx,
                             const unsigned char *trng_entropy
                             /* TRNG_BYTE_LENGTH wide buffer */);
 
@@ -99,7 +99,7 @@ void seedexpander_from_trng(AES_XOF_struct *ctx,
  * the NIST seedexpander seeded with the proper key.
  * Assumes that the maximum value for the range n is 2^32-1
  */
-int rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx);
+int OQS_NAMESPACE_rand_range(const int n, const int logn, AES_XOF_struct *seed_expander_ctx);
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -120,12 +120,12 @@ struct xof_shake {
 } xof_shake_t;
 
 
-void shake_seedexpander_init(xof_shake_t *st,
+void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
                              const unsigned char *trng_entropy
                              /* TRNG_BYTE_LENGTH wide buffer */);
 
-void shake_seedexpander_extract(xof_shake_t *st,
+void OQS_NAMESPACE_shake_seedexpander_extract(xof_shake_t *st,
                                 unsigned char *output,
                                 unsigned int outputByteLen);
 
-int rand_range_shake(const int n, const int logn, xof_shake_t *st);
+int OQS_NAMESPACE_rand_range_shake(const int n, const int logn, xof_shake_t *st);

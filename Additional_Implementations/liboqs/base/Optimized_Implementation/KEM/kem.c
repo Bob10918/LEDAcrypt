@@ -38,7 +38,7 @@ int OQS_NAMESPACE_crypto_kem_keypair( unsigned char *pk,
                         unsigned char *sk )
 {
 
-   key_gen_niederreiter((publicKeyNiederreiter_t *const) pk,
+   OQS_NAMESPACE_key_gen_niederreiter((publicKeyNiederreiter_t *const) pk,
                         (privateKeyNiederreiter_t *const) sk);
 
    return 0; // NIST convention: 0 == zero errors
@@ -54,7 +54,7 @@ int OQS_NAMESPACE_crypto_kem_enc( unsigned char *ct,
                     const unsigned char *pk )
 {
 
-   encrypt_niederreiter_indcca2((unsigned char *const)
+   OQS_NAMESPACE_encrypt_niederreiter_indcca2((unsigned char *const)
                                 ct, /* ciphertext - output   */
                                 (unsigned char *const) ss,  /* shared secret - output*/
                                 (const publicKeyNiederreiter_t *const) pk);
@@ -72,7 +72,7 @@ int OQS_NAMESPACE_crypto_kem_dec( unsigned char *ss,
                     const unsigned char *sk)
 {
 
-   decrypt_niederreiter_indcca2((unsigned char *const) ss,
+   OQS_NAMESPACE_decrypt_niederreiter_indcca2((unsigned char *const) ss,
                                 (const unsigned char *const) ct,
                                 (const privateKeyNiederreiter_t *const) sk);
 

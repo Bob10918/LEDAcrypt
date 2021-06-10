@@ -30,4 +30,4 @@
 
 #pragma once
 
-void gf2x_mod_inverse_exp(DIGIT *polyInv, DIGIT *poly);
+void OQS_NAMESPACE_gf2x_mod_inverse_exp(DIGIT *polyInv, DIGIT *poly);

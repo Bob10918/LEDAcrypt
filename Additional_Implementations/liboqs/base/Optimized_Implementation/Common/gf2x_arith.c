@@ -48,7 +48,7 @@ static inline void xor_128_v_with_r(uint64_t *i,__m128i v)
 }
 
 // 1-word multiplication
-static inline void gf2x_mul_1_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_1_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    __m128i res;
@@ -58,7 +58,7 @@ static inline void gf2x_mul_1_avx(uint64_t *a, const uint64_t *b,
 }
 
 //2-word multiplication
-static inline void gf2x_mul_2_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_2_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    register __m128i v1, v2;
@@ -80,7 +80,7 @@ static inline void gf2x_mul_2_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 3-word multiplication
-static inline void gf2x_mul_3_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_3_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    __m128i v1, v2;
@@ -119,7 +119,7 @@ static inline void gf2x_mul_3_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 4-word multiplication (non-recursive)
-static inline void gf2x_mul_4_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_4_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    register __m128i v1, v2, t1, t2;
@@ -175,7 +175,7 @@ static inline void gf2x_mul_4_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 5-word multiplication (strategy 5-1)
-static inline void gf2x_mul_5_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_5_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    register __m128i v1, v2, t1, t2,tmp;
@@ -265,13 +265,13 @@ static inline void gf2x_mul_5_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 6-word multiplication (1 round Karatsuba w/ gf2x_mul_3_avx)
-static inline void gf2x_mul_6_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_6_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    /* compute onto destination b0c0 */
-   gf2x_mul_3_avx(a,b,c);
+   OQS_NAMESPACE_gf2x_mul_3_avx(a,b,c);
    /* compute onto destination b0c0 */
-   gf2x_mul_3_avx(a+6,b+3,c+3);
+   OQS_NAMESPACE_gf2x_mul_3_avx(a+6,b+3,c+3);
 
    alignas(32) uint64_t sum1[3], sum2[3], prodsum[6];
    __m128i tmp1,tmp2;
@@ -288,7 +288,7 @@ static inline void gf2x_mul_6_avx(uint64_t *a, const uint64_t *b,
    sum2[2] = b[2]^b[5];
 
    /* (a1+a0)*(b1+b0) +  */
-   gf2x_mul_3_avx(prodsum,sum1,sum2);
+   OQS_NAMESPACE_gf2x_mul_3_avx(prodsum,sum1,sum2);
 
    LOAD_m128_FROM_u64(tmp1, prodsum);
    LOAD_m128_FROM_u64(tmp2, a);
@@ -325,7 +325,7 @@ static inline void gf2x_mul_6_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 7-word multiplication (strategy 7-1)
-static inline void gf2x_mul_7_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_7_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    __m128i m[22], bc[7];
@@ -462,13 +462,13 @@ static inline void gf2x_mul_7_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 8-word multiplication (1 round Karatsuba w/ gf2x_mul_4_avx)
-static inline void gf2x_mul_8_avx(uint64_t *a, const uint64_t *b,
+static inline void OQS_NAMESPACE_gf2x_mul_8_avx(uint64_t *a, const uint64_t *b,
                                   const uint64_t *c)
 {
    /* compute onto destination b0c0 */
-   gf2x_mul_4_avx(a,b,c);
+   OQS_NAMESPACE_gf2x_mul_4_avx(a,b,c);
    /* compute onto destination b0c0 */
-   gf2x_mul_4_avx(a+8,b+4,c+4);
+   OQS_NAMESPACE_gf2x_mul_4_avx(a+8,b+4,c+4);
 
    alignas(32) uint64_t sum1[4], sum2[4], prodsum[8];
    __m128i tmp1,tmp2;
@@ -492,7 +492,7 @@ static inline void gf2x_mul_8_avx(uint64_t *a, const uint64_t *b,
    STORE_m128_INTO_u64(sum2+2, tmp1);
 
    /* (a1+a0)*(b1+b0) +  */
-   gf2x_mul_4_avx(prodsum,sum1,sum2);
+   OQS_NAMESPACE_gf2x_mul_4_avx(prodsum,sum1,sum2);
 
    LOAD_m128_FROM_u64(tmp1, prodsum);
    LOAD_m128_FROM_u64(tmp2, a);
@@ -539,13 +539,13 @@ static inline void gf2x_mul_8_avx(uint64_t *a, const uint64_t *b,
 }
 
 // 9-word multiplication (strategy 9-1)
-static inline void gf2x_mul_9_avx(uint64_t *c, const uint64_t *a,
+static inline void OQS_NAMESPACE_gf2x_mul_9_avx(uint64_t *c, const uint64_t *a,
                                   const uint64_t *b)
 {
    alignas(32) uint64_t t1[5], t2[5], t3[10];
 
-   gf2x_mul_5_avx(c+8, a+4, b+4);
-   gf2x_mul_4_avx(c, a, b);
+   OQS_NAMESPACE_gf2x_mul_5_avx(c+8, a+4, b+4);
+   OQS_NAMESPACE_gf2x_mul_4_avx(c, a, b);
 
    _mm256_store_pd((double *)(t1+1),
                    _mm256_xor_pd(_mm256_loadu_pd((double *)a),
@@ -558,7 +558,7 @@ static inline void gf2x_mul_9_avx(uint64_t *c, const uint64_t *a,
    t1[0] = a[4];
    t2[0] = b[4];
 
-   gf2x_mul_5_avx(t3, t1, t2);
+   OQS_NAMESPACE_gf2x_mul_5_avx(t3, t1, t2);
 
    __m256d d1 = _mm256_loadu_pd((double *)(t3+6));
    d1 = _mm256_xor_pd(d1, _mm256_loadu_pd((double *)(c+14)));
@@ -597,7 +597,7 @@ static inline void gf2x_mul_9_avx(uint64_t *c, const uint64_t *a,
  * Finally a single (length%remC)x(length%remC) multiplication and a sequence
  * of 1x1 ones are employed to complete the computation of the remaining digits
  */
-void gf2x_mul_avx(const int nr, uint64_t Res[],
+void OQS_NAMESPACE_gf2x_mul_avx(const int nr, uint64_t Res[],
                   const int na, const uint64_t A[],
                   const int nb, const uint64_t B[])
 {
@@ -619,7 +619,7 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
    for( j = 0; j < quoC; j++) { /* B macro-word idx */
       for( i = 0; i < quoC; i++) { /* A macro-word idx */
          /* CHUNK_SIZE x CHUNK_SIZE full block multiplication */
-         CAT(gf2x_mul_,CHUNK_SIZE,_avx)(buffer,
+         CAT(OQS_NAMESPACE_gf2x_mul_,CHUNK_SIZE,_avx)(buffer,
                                         A+(na - CHUNK_SIZE*(i+1)  ),
                                         B+(nb - CHUNK_SIZE*(j+1)  ));
          gf2x_add(2*CHUNK_SIZE,Res+(nr - CHUNK_SIZE*(i+j+2)),
@@ -631,28 +631,28 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
          /* remC x remC full block mul */
          switch(remC) {
          case 8:
-            gf2x_mul_8_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_8_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 7:
-            gf2x_mul_7_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_7_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 6:
-            gf2x_mul_6_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_6_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 5:
-            gf2x_mul_5_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_5_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 4:
-            gf2x_mul_4_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_4_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 3:
-            gf2x_mul_3_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_3_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 2:
-            gf2x_mul_2_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_2_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 1:
-            gf2x_mul_1_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
+            OQS_NAMESPACE_gf2x_mul_1_avx(buffer, A, B+(nb - CHUNK_SIZE*j - remC));
             break;
          case 0: ; /* do nothing */
          }
@@ -664,7 +664,7 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
          offset += remC;
          for (int k = 0; k < CHUNK_SIZE - remC ; k++) { /* remaining b uint64_ts */
             for (int l = 0; l < remC ; l++) { /* remaining a uint64_ts */
-               gf2x_mul_1_avx(buffer, A+(remC-1)-l, B+((nb - CHUNK_SIZE*j - remC-1) - k));
+               OQS_NAMESPACE_gf2x_mul_1_avx(buffer, A+(remC-1)-l, B+((nb - CHUNK_SIZE*j - remC-1) - k));
                gf2x_add(2, Res+(nr - offset - 2 - (l+k)),
                         2, buffer,
                         2, Res+(nr - offset - 2 - (l+k)));
@@ -680,28 +680,28 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
       for ( i = 0; i < quorem ; i++ ) {
          switch(remC) {
          case 8:
-            gf2x_mul_8_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_8_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 7:
-            gf2x_mul_7_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_7_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 6:
-            gf2x_mul_6_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_6_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 5:
-            gf2x_mul_5_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_5_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 4:
-            gf2x_mul_4_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_4_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 3:
-            gf2x_mul_3_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_3_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 2:
-            gf2x_mul_2_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_2_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 1:
-            gf2x_mul_1_avx(buffer, A+(na - remC*(i+1)  ), B);
+            OQS_NAMESPACE_gf2x_mul_1_avx(buffer, A+(na - remC*(i+1)  ), B);
             break;
          case 0: ; /* do nothing */
          }
@@ -713,28 +713,28 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
       int offset = remC*quorem + CHUNK_SIZE*(quoC);
       switch(remrem) {
       case 8:
-         gf2x_mul_8_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_8_avx( buffer, A, B+remC-remrem );
          break;
       case 7:
-         gf2x_mul_7_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_7_avx( buffer, A, B+remC-remrem );
          break;
       case 6:
-         gf2x_mul_6_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_6_avx( buffer, A, B+remC-remrem );
          break;
       case 5:
-         gf2x_mul_5_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_5_avx( buffer, A, B+remC-remrem );
          break;
       case 4:
-         gf2x_mul_4_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_4_avx( buffer, A, B+remC-remrem );
          break;
       case 3:
-         gf2x_mul_3_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_3_avx( buffer, A, B+remC-remrem );
          break;
       case 2:
-         gf2x_mul_2_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_2_avx( buffer, A, B+remC-remrem );
          break;
       case 1:
-         gf2x_mul_1_avx( buffer, A, B+remC-remrem );
+         OQS_NAMESPACE_gf2x_mul_1_avx( buffer, A, B+remC-remrem );
          break;
       case 0: ;/* do nothing */
       }
@@ -745,7 +745,7 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
       /* the remaining remrem uint64_ts of A are multiplied by the remC - remrem leading of  B*/
       for (int k = 0; k < remC - remrem; k++) { /* uint64_t index in B */
          for (int l = 0; l < remrem ; l++) {
-            gf2x_mul_1_avx(buffer, A+(remrem-1)-l, B+(remC - remrem -1)-k);
+            OQS_NAMESPACE_gf2x_mul_1_avx(buffer, A+(remrem-1)-l, B+(remC - remrem -1)-k);
             gf2x_add(2, Res+(nr - offset - 2 - (l+k)),
                      2, buffer,
                      2, Res+(nr - offset - 2 - (l+k)));
@@ -756,7 +756,7 @@ void gf2x_mul_avx(const int nr, uint64_t Res[],
 /*----------------------------------------------------------------------------*/
 #else
 
-void gf2x_mul_comb(const int nr, DIGIT Res[],
+void OQS_NAMESPACE_gf2x_mul_comb(const int nr, DIGIT Res[],
                    const int na, const DIGIT A[],
                    const int nb, const DIGIT B[])
 {
@@ -801,7 +801,7 @@ static inline void gf2x_add_asymm(const int nr, DIGIT Res[],
 
 /*---------------------------------------------------------------------------*/
 
-void gf2x_mul_Kar(const int nr, DIGIT Res[],
+void OQS_NAMESPACE_gf2x_mul_Kar(const int nr, DIGIT Res[],
                   const int na, const DIGIT A[],
                   const int nb, const DIGIT B[])
 {
@@ -809,9 +809,9 @@ void gf2x_mul_Kar(const int nr, DIGIT Res[],
    if(na < MIN_KAR_DIGITS || nb < MIN_KAR_DIGITS) {
       /* fall back to schoolbook */
 #if (defined HIGH_PERFORMANCE_X86_64) || (defined HIGH_COMPATIBILITY_X86_64)
-      gf2x_mul_avx(nr, Res, na, A, nb, B);
+      OQS_NAMESPACE_gf2x_mul_avx(nr, Res, na, A, nb, B);
 #else
-      gf2x_mul_comb(nr, Res, na, A, nb, B);
+      OQS_NAMESPACE_gf2x_mul_comb(nr, Res, na, A, nb, B);
 #endif
       return;
    }
@@ -825,16 +825,16 @@ void gf2x_mul_Kar(const int nr, DIGIT Res[],
       gf2x_add(bih,sumB,
                bih,B,
                bih,B+bih);
-      gf2x_mul_Kar(2*bih, middle,
+      OQS_NAMESPACE_gf2x_mul_Kar(2*bih, middle,
                    bih, sumA,
                    bih, sumB);
-      gf2x_mul_Kar(2*bih, Res+2*bih,
+      OQS_NAMESPACE_gf2x_mul_Kar(2*bih, Res+2*bih,
                    bih, A+bih,
                    bih, B+bih);
       gf2x_add(2*bih, middle,
                2*bih, middle,
                2*bih, Res+2*bih);
-      gf2x_mul_Kar(2*bih, Res,
+      OQS_NAMESPACE_gf2x_mul_Kar(2*bih, Res,
                    bih, A,
                    bih, B);
       gf2x_add(2*bih, middle,
@@ -852,16 +852,16 @@ void gf2x_mul_Kar(const int nr, DIGIT Res[],
       gf2x_add_asymm(bih,  sumB,
                      bih,  B+bih-1,
                      bih-1,B);
-      gf2x_mul_Kar(2*bih, middle,
+      OQS_NAMESPACE_gf2x_mul_Kar(2*bih, middle,
                    bih, sumA,
                    bih, sumB);
-      gf2x_mul_Kar(2*bih, Res+2*(bih-1),
+      OQS_NAMESPACE_gf2x_mul_Kar(2*bih, Res+2*(bih-1),
                    bih, A+bih-1,
                    bih, B+bih-1);
       gf2x_add(2*bih, middle,
                2*bih, middle,
                2*bih, Res+2*(bih-1));
-      gf2x_mul_Kar(2*(bih-1), Res,
+      OQS_NAMESPACE_gf2x_mul_Kar(2*(bih-1), Res,
                    (bih-1), A,
                    (bih-1), B);
       gf2x_add_asymm(2*bih, middle,
@@ -946,14 +946,14 @@ static inline void gf2x_exact_div_x_plus_one(const int na, DIGIT A[])
  * Marco Bodrato: "Towards Optimal Toom-Cook Multiplication for Univariate and
  * Multivariate Polynomials in Characteristic 2 and 0". WAIFI 2007: 116-133   */
 
-void gf2x_mul_TC3(const int nr, DIGIT Res[],
+void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT Res[],
                   const int na, const DIGIT A[],
                   const int nb, const DIGIT B[])
 {
 
    if(na < MIN_TOOM_DIGITS || nb < MIN_TOOM_DIGITS) {
       /* fall back to Karatsuba */
-      gf2x_mul_Kar(nr, Res, na, A, nb, B);
+      OQS_NAMESPACE_gf2x_mul_Kar(nr, Res, na, A, nb, B);
       return;
    }
 
@@ -1005,7 +1005,7 @@ void gf2x_mul_TC3(const int nr, DIGIT Res[],
             bih, v2);
 
    DIGIT w1[2*bih];
-   gf2x_mul_TC3(2*bih, w1,
+   OQS_NAMESPACE_gf2x_mul_TC3(2*bih, w1,
                 bih, sum_u,
                 bih, sum_v);
 
@@ -1032,7 +1032,7 @@ void gf2x_mul_TC3(const int nr, DIGIT Res[],
                   bih, sum_v);
 
    DIGIT w3[2*bih+2];
-   gf2x_mul_TC3(2*bih+2, w3,
+   OQS_NAMESPACE_gf2x_mul_TC3(2*bih+2, w3,
                 bih+1, temp_u_components,
                 bih+1, temp_v_components);
 
@@ -1044,18 +1044,18 @@ void gf2x_mul_TC3(const int nr, DIGIT Res[],
                   bih, v0);
 
    DIGIT w2[2*bih+2];
-   gf2x_mul_TC3(2*bih+2, w2,
+   OQS_NAMESPACE_gf2x_mul_TC3(2*bih+2, w2,
                 bih+1, u1_x1_u2_x2,
                 bih+1, v1_x1_v2_x2);
 
    DIGIT w4[2*bih];
-   gf2x_mul_TC3(2*bih, w4,
+   OQS_NAMESPACE_gf2x_mul_TC3(2*bih, w4,
                 bih, u2,
                 bih, v2);
 
    DIGIT *w0 = Res+(nr-2*bih);
 
-   gf2x_mul_TC3(2*bih, w0,
+   OQS_NAMESPACE_gf2x_mul_TC3(2*bih, w0,
                 bih, u0,
                 bih, v0);
 
@@ -1118,17 +1118,17 @@ void gf2x_mul_TC3(const int nr, DIGIT Res[],
 
    /* w4 does not overlap with w0 */
    leastSignifDigitIdx = nr - 1 - 4*bih;
-   for (int i = 0; i< 2*bih && (leastSignifDigitIdx - i >= 0) ; i++) {
+   for (i = 0; i< 2*bih && (leastSignifDigitIdx - i >= 0) ; i++) {
       Res[leastSignifDigitIdx - i] = w4[2*bih   - 1 - i];
    }
    /* w1, can be computed directly with in-place accumulation */
    /* w2, w3 overlap with each others at least partially */
    leastSignifDigitIdx = nr - 1 - 2*bih;
-   for (int i = 0; i< 2*bih+2; i++) {
+   for (i = 0; i< 2*bih+2; i++) {
       Res[leastSignifDigitIdx - i] ^= w2[2*bih+2 - 1 - i];
    }
    leastSignifDigitIdx = nr - 1 - 3*bih;
-   for (int i = 0; i< 2*bih+2 ; i++) {
+   for (i = 0; i< 2*bih+2 ; i++) {
       Res[leastSignifDigitIdx - i] ^= w3[2*bih+2 - 1 - i];
    }
 }

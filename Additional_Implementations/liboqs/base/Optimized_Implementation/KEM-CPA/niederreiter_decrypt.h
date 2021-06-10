@@ -35,7 +35,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-int decrypt_niederreiter_indcpa(unsigned char *const
+int OQS_NAMESPACE_decrypt_niederreiter_indcpa(unsigned char *const
                                 ss,                   /* output */
                                 const unsigned char *const ct,             /* input */
                                 const unsigned char *const tag,            /* input */

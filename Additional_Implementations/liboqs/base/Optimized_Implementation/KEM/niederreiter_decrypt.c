@@ -40,7 +40,7 @@
 #include "fips202.h"
 #include <string.h>
 
-extern int thresholds[2];
+extern int OQS_NAMESPACE_thresholds[2];
 /*----------------------------------------------------------------------------*/
 static
 int decrypt_niederreiter(DIGIT err[],            // N0 circ poly
@@ -49,21 +49,21 @@ int decrypt_niederreiter(DIGIT err[],            // N0 circ poly
                         )
 {
    AES_XOF_struct niederreiter_decrypt_expander;
-   seedexpander_from_trng(&niederreiter_decrypt_expander,
+   OQS_NAMESPACE_seedexpander_from_trng(&niederreiter_decrypt_expander,
                           sk->prng_seed);
    /* rebuild secret key values */
    POSITION_T HPosOnes[N0][V];
 
    int rejections =  sk->rejections;
-   thresholds[1] = sk->secondIterThreshold;
+   OQS_NAMESPACE_thresholds[1] = sk->secondIterThreshold;
 
    do {
-      generateHPosOnes(HPosOnes, &niederreiter_decrypt_expander);
+      OQS_NAMESPACE_generateHPosOnes(HPosOnes, &niederreiter_decrypt_expander);
       rejections--;
    } while(rejections>=0);
 
    POSITION_T HtrPosOnes[N0][V];
-   transposeHPosOnes(HtrPosOnes, (const POSITION_T(*)[V]) HPosOnes);
+   OQS_NAMESPACE_transposeHPosOnes(HtrPosOnes, (const POSITION_T(*)[V]) HPosOnes);
 
    DIGIT privateSyndrome[NUM_DIGITS_GF2X_ELEMENT];
 
@@ -71,16 +71,16 @@ int decrypt_niederreiter(DIGIT err[],            // N0 circ poly
    DIGIT err_computed[N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B] = {0};
 #if (defined HIGH_PERFORMANCE_X86_64)
    DIGIT Ln0tr[NUM_DIGITS_GF2X_ELEMENT] = {0};
-   gf2x_mod_densify_CT(Ln0tr,HtrPosOnes[N0-1],V);
-   gf2x_mod_mul(privateSyndrome,syndrome,Ln0tr);
+   OQS_NAMESPACE_gf2x_mod_densify_CT(Ln0tr,HtrPosOnes[N0-1],V);
+   OQS_NAMESPACE_gf2x_mod_mul(privateSyndrome,syndrome,Ln0tr);
 
 #else
-   gf2x_mod_mul_dense_to_sparse(privateSyndrome,
+   OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(privateSyndrome,
                                 syndrome,
                                 HtrPosOnes[N0-1],
                                 V);
 #endif
-   decryptOk = bf_decoding_CT(err_computed,
+   decryptOk = OQS_NAMESPACE_bf_decoding_CT(err_computed,
                               (const POSITION_T (*)[V]) HtrPosOnes,
                               (const POSITION_T (*)[V]) HPosOnes,
                               privateSyndrome);
@@ -113,7 +113,7 @@ int decrypt_niederreiter(DIGIT err[],            // N0 circ poly
 
 /*----------------------------------------------------------------------------*/
 
-void decrypt_niederreiter_indcca2(unsigned char *const ss,
+void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
                                   const unsigned char *const ct,
                                   const privateKeyNiederreiter_t *const sk)
 {
@@ -163,11 +163,11 @@ void decrypt_niederreiter_indcca2(unsigned char *const ss,
 
    AES_XOF_struct hashedAndTruncaedSeed_expander;
    memset(&hashedAndTruncaedSeed_expander, 0x00, sizeof(AES_XOF_struct));
-   seedexpander_from_trng(&hashedAndTruncaedSeed_expander,
+   OQS_NAMESPACE_seedexpander_from_trng(&hashedAndTruncaedSeed_expander,
                           hashed_decoded_seed);
 
    POSITION_T reconstructed_errorPos[NUM_ERRORS_T];
-   rand_error_pos(reconstructed_errorPos, &hashedAndTruncaedSeed_expander);
+   OQS_NAMESPACE_rand_error_pos(reconstructed_errorPos, &hashedAndTruncaedSeed_expander);
 
    DIGIT reconstructed_error_vector[N0*NUM_DIGITS_GF2X_ELEMENT];
    expand_error(reconstructed_error_vector, reconstructed_errorPos);
@@ -200,4 +200,4 @@ void decrypt_niederreiter_indcca2(unsigned char *const ss,
                  2*TRNG_BYTE_LENGTH                // input Length
                  );
 
-} // end decrypt_niederreiter_indcca2
+} // end OQS_NAMESPACE_decrypt_niederreiter_indcca2

@@ -1,7 +1,7 @@
 #include "niederreiter_encrypt.h"
 #include "qc_ldpc_parameters.h"
 #include "gf2x_arith_mod_xPplusOne.h"
-#include "rng.h"
+#include "randombytes.h"
 #include "fips202.h"
 #include <string.h> // memset(...)
 
@@ -24,7 +24,7 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
             filled++;
          }
       }
-      gf2x_mod_mul_dense_to_sparse(saux,
+      OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(saux,
                                    pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                                    blkErrorPos,
                                    filled);
@@ -45,11 +45,11 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const ct,  /* ciph
    randombytes(err_vect_seed, TRNG_BYTE_LENGTH);
 
    xof_shake_t err_vect_seed_expander;
-   shake_seedexpander_init(&err_vect_seed_expander,
+   OQS_NAMESPACE_shake_seedexpander_init(&err_vect_seed_expander,
                            err_vect_seed);
 
    POSITION_T errorPos[NUM_ERRORS_T];
-   rand_error_pos_shake(errorPos,
+   OQS_NAMESPACE_rand_error_pos_shake(errorPos,
                         &err_vect_seed_expander);
 
    unsigned char error_vector[1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B];
@@ -58,7 +58,7 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const ct,  /* ciph
    // error_vector[0] = 0x01; will be needed to use the HASH_FUNCTION
    // as a proper cryptographic compressor
    error_vector[0] = 0x00;
-   expand_error( ( (DIGIT *)(&error_vector[1]) ), errorPos);
+   OQS_NAMESPACE_expand_error( ( (DIGIT *)(&error_vector[1]) ), errorPos);
 
    HASH_FUNCTION(ss,
                  (unsigned char *) error_vector,        // input

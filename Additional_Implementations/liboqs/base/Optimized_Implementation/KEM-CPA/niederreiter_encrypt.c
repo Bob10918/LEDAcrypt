@@ -54,18 +54,18 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
             filled++;
          }
       }
-      gf2x_mod_mul_dense_to_sparse(saux,
+      OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(saux,
                                    pk->Mtr+i*NUM_DIGITS_GF2X_ELEMENT,
                                    blkErrorPos,
                                    filled);
-      gf2x_mod_add(syndrome, syndrome, saux);
+      OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, saux);
    }   // end for
-   gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
+   OQS_NAMESPACE_gf2x_mod_add(syndrome, syndrome, err+(N0-1)*NUM_DIGITS_GF2X_ELEMENT);
 } // end encrypt_niederreiter
 
 /*----------------------------------------------------------------------------*/
 
-void encrypt_niederreiter_indcpa(unsigned char *const
+void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const
                                  ct,  /* ciphertext - output    */
                                  unsigned char *const tag, /* tag for message confirmation - output */
                                  unsigned char *const ss,  /* shared secret - output */
@@ -73,14 +73,14 @@ void encrypt_niederreiter_indcpa(unsigned char *const
 {
 
    unsigned char err_vect_seed[TRNG_BYTE_LENGTH];
-   randombytes(err_vect_seed, TRNG_BYTE_LENGTH);
+   OQS_NAMESPACE_randombytes(err_vect_seed, TRNG_BYTE_LENGTH);
 
    xof_shake_t err_vect_seed_expander;
-   shake_seedexpander_init(&err_vect_seed_expander,
+   OQS_NAMESPACE_shake_seedexpander_init(&err_vect_seed_expander,
                            err_vect_seed);
 
    POSITION_T errorPos[NUM_ERRORS_T];
-   rand_error_pos_shake(errorPos,
+   OQS_NAMESPACE_rand_error_pos_shake(errorPos,
                         &err_vect_seed_expander);
 
    unsigned char error_vector[1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B];
@@ -111,7 +111,7 @@ void encrypt_niederreiter_indcpa(unsigned char *const
       tag[i] = err_vect_seed[i] ^ tagMask[i];
    }
 
-} // end encrypt_niederreiter_indcpa
+} // end OQS_NAMESPACE_encrypt_niederreiter_indcpa
 
 /*----------------------------------------------------------------------------*/
 

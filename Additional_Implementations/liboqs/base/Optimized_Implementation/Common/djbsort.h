@@ -7,7 +7,7 @@
 
 #pragma once
 
-void int32_sort(int32_t *x,long long n);
+void OQS_NAMESPACE_int32_sort(int32_t *x,long long n);
 
 
 

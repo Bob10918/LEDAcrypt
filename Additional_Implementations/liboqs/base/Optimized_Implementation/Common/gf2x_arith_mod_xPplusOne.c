@@ -111,7 +111,7 @@ with this CPU word bitsize !!! "
 
 /*----------------------------------------------------------------------------*/
 
-void gf2x_transpose_in_place(DIGIT A[])
+void OQS_NAMESPACE_gf2x_transpose_in_place(DIGIT A[])
 {
    /* it keeps the lsb in the same position and
     * inverts the sequence of the remaining bits
@@ -230,7 +230,7 @@ void gf2x_digit_times_poly_mul(const int nr,
 * May 2012. doi: 10.1049/iet-cdt.2010.0006
 */
 
-int gf2x_mod_inverse_KTT(DIGIT out[],
+int OQS_NAMESPACE_gf2x_mod_inverse_KTT(DIGIT out[],
                          const DIGIT in[])   /* in^{-1} mod x^P-1 */
 {
 
@@ -392,14 +392,14 @@ int gf2x_mod_inverse_KTT(DIGIT out[],
 }
 
 
-void gf2x_mod_mul(DIGIT Res[], const DIGIT A[], const DIGIT B[])
+void OQS_NAMESPACE_gf2x_mod_mul(DIGIT Res[], const DIGIT A[], const DIGIT B[])
 {
 
    DIGIT aux[2*NUM_DIGITS_GF2X_ELEMENT];
    GF2X_MUL(2*NUM_DIGITS_GF2X_ELEMENT, aux,
             NUM_DIGITS_GF2X_ELEMENT, A,
             NUM_DIGITS_GF2X_ELEMENT, B);
-   gf2x_mod(Res, 2*NUM_DIGITS_GF2X_ELEMENT, aux);
+   OQS_NAMESPACE_gf2x_mod(Res, 2*NUM_DIGITS_GF2X_ELEMENT, aux);
 
 } // end gf2x_mod_mul
 
@@ -407,7 +407,7 @@ void gf2x_mod_mul(DIGIT Res[], const DIGIT A[], const DIGIT B[])
 /* Obtains fresh randomness and seed-expands it until all the required positions
  * for the '1's in the circulant block are obtained */
 
-void rand_circulant_sparse_block(POSITION_T *pos_ones,
+void OQS_NAMESPACE_rand_circulant_sparse_block(POSITION_T *pos_ones,
                                  const int countOnes,
                                  AES_XOF_struct *seed_expander_ctx)
 {
@@ -415,7 +415,7 @@ void rand_circulant_sparse_block(POSITION_T *pos_ones,
    int duplicated, placedOnes = 0;
 
    while (placedOnes < countOnes) {
-      int p = rand_range(NUM_BITS_GF2X_ELEMENT,
+      int p = OQS_NAMESPACE_rand_range(NUM_BITS_GF2X_ELEMENT,
                          BITS_TO_REPRESENT(P),
                          seed_expander_ctx);
       duplicated = 0;
@@ -429,18 +429,18 @@ void rand_circulant_sparse_block(POSITION_T *pos_ones,
          placedOnes++;
       }
    }
-} // rand_circulant_sparse_block
+} // OQS_NAMESPACE_rand_circulant_sparse_block
 
 /*----------------------------------------------------------------------------*/
 
-void rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
+void OQS_NAMESPACE_rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
                     AES_XOF_struct *seed_expander_ctx)
 {
 
    int duplicated, counter = 0;
 
    while (counter < NUM_ERRORS_T) {
-      int p = rand_range(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
+      int p = OQS_NAMESPACE_rand_range(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
                          seed_expander_ctx);
       duplicated = 0;
       for (int j = 0; j < counter; j++) {
@@ -453,18 +453,18 @@ void rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
          counter++;
       }
    }
-} // end rand_error_pos
+} // end OQS_NAMESPACE_rand_error_pos
 
 /*----------------------------------------------------------------------------*/
 
-void rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
+void OQS_NAMESPACE_rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
                           xof_shake_t *state)
 {
 
    int duplicated, counter = 0;
 
    while (counter < NUM_ERRORS_T) {
-      int p = rand_range_shake(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
+      int p = OQS_NAMESPACE_rand_range_shake(N0*NUM_BITS_GF2X_ELEMENT,BITS_TO_REPRESENT(P),
                                state);
       duplicated = 0;
       for (int j = 0; j < counter; j++) {
@@ -477,7 +477,7 @@ void rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
          counter++;
       }
    }
-} // end rand_error_pos_shake
+} // end OQS_NAMESPACE_rand_error_pos_shake
 
 /*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
@@ -710,7 +710,7 @@ void word_level_shift_VT(DIGIT *restrict shifted_param,
 #define WORD_LEVEL_SHIFT word_level_shift_VT
 #endif
 
-void gf2x_mod_mul_monom(DIGIT shifted[],
+void OQS_NAMESPACE_gf2x_mod_mul_monom(DIGIT shifted[],
                         POSITION_T shift_amt,
                         const DIGIT to_shift[])
 {
@@ -770,7 +770,7 @@ void gf2x_mod_mul_monom(DIGIT shifted[],
    shifted[0] &= SLACK_CLEAR_MASK;
 }
 
-void gf2x_mod_fmac(DIGIT result[],
+void OQS_NAMESPACE_gf2x_mod_fmac(DIGIT result[],
                    POSITION_T shift_amt,
                    const DIGIT to_shift[])
 {
@@ -838,7 +838,7 @@ void gf2x_mod_fmac(DIGIT result[],
  **********************************************************************************/
 
 /* computes a sparse to dense multiplication using gf2x_mod_mul_monom */
-void gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
+void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
                                   const DIGIT dense[],
                                   const POSITION_T sparse[],
                                   unsigned int nPos)
@@ -846,6 +846,6 @@ void gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
 
    memset(Res,0,NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B);
    for(int i = 0; i < nPos; i++) {
-      gf2x_mod_fmac(Res,sparse[i],dense);
+      OQS_NAMESPACE_gf2x_mod_fmac(Res,sparse[i],dense);
    }
 }
