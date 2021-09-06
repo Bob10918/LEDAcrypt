@@ -53,3 +53,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/.idea/
+/Additional_Implementations/Benchmarking/build/
+/Additional_Implementations/Benchmarking/cmake-build-debug/CMakeFiles/
+/Additional_Implementations/Benchmarking/cmake-build-debug/cmake_install.cmake
+/Additional_Implementations/Benchmarking/cmake-build-debug/CMakeCache.txt
+/Additional_Implementations/Benchmarking/cmake-build-debug/LEDAcrypt.cbp
+/Additional_Implementations/Benchmarking/cmake-build-debug/Makefile
+/Additional_Implementations/liboqs/.vscode/
+/cmake-build-debug/
