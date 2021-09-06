@@ -10,7 +10,7 @@
  * private key field secondIterThreshold*/
 int OQS_NAMESPACE_thresholds[2] = {B0, (V)/2+1};
 #else
-unsigned int synd_corrt_vec[][2]= {SYNDROME_TRESH_LOOKUP_TABLE};
+unsigned int OQS_NAMESPACE_synd_corrt_vec[][2]= {SYNDROME_TRESH_LOOKUP_TABLE};
 #endif
 
 
@@ -46,17 +46,17 @@ int OQS_NAMESPACE_bf_decoding(DIGIT out[], // N0 polynomials
       int syndrome_wt = population_count(currSyndrome);
       int min_idx=0;
       int max_idx;
-      max_idx = sizeof(synd_corrt_vec)/(2*sizeof(unsigned int)) - 1;
+      max_idx = sizeof(OQS_NAMESPACE_synd_corrt_vec)/(2*sizeof(unsigned int)) - 1;
       int thresh_table_idx = (min_idx + max_idx)/2;
       while(min_idx< max_idx) {
-         if (synd_corrt_vec[thresh_table_idx][0] <= syndrome_wt) {
+         if (OQS_NAMESPACE_synd_corrt_vec[thresh_table_idx][0] <= (unsigned int)syndrome_wt) {
             min_idx = thresh_table_idx +1;
          } else {
             max_idx = thresh_table_idx -1;
          }
          thresh_table_idx = (min_idx +max_idx)/2;
       }
-      int corrt_syndrome_based=synd_corrt_vec[thresh_table_idx][1];
+      int corrt_syndrome_based=OQS_NAMESPACE_synd_corrt_vec[thresh_table_idx][1];
 #else
       /* iteration based threshold determination*/
       int corrt_syndrome_based= OQS_NAMESPACE_thresholds[iteration];

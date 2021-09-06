@@ -19,7 +19,7 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
    for (i = 0; i < N0-1; i++) {
       filled=0;
       for (int j = 0 ; j < NUM_ERRORS_T; j ++) {
-         if(errorPos[j] / P == i) {
+         if((signed int)errorPos[j] / P == i) {
             blkErrorPos[filled] =  errorPos[j] % P;
             filled++;
          }

@@ -972,7 +972,7 @@ void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT Res[],
    for(i = 0; i < leading_slack ; i++) {
       u2[i] = 0;
    }
-   for (; i < bih; ++i) {
+   for (; (unsigned int)i < bih; ++i) {
       u2[i] = A[i-leading_slack];
    }
    u1= (DIGIT *) (A+bih-leading_slack);
@@ -982,7 +982,7 @@ void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT Res[],
    for(i = 0; i < leading_slack ; i++) {
       v2[i] = 0;
    }
-   for (; i < bih; ++i) {
+   for (; (unsigned int)i < bih; ++i) {
       v2[i] = B[i-leading_slack];
    }
    v1=(DIGIT *) (B+bih-leading_slack);
@@ -1118,17 +1118,17 @@ void OQS_NAMESPACE_gf2x_mul_TC3(const int nr, DIGIT Res[],
 
    /* w4 does not overlap with w0 */
    leastSignifDigitIdx = nr - 1 - 4*bih;
-   for (i = 0; i< 2*bih && (leastSignifDigitIdx - i >= 0) ; i++) {
+   for (i = 0; (unsigned int)i< 2*bih && (leastSignifDigitIdx - i >= 0) ; i++) {
       Res[leastSignifDigitIdx - i] = w4[2*bih   - 1 - i];
    }
    /* w1, can be computed directly with in-place accumulation */
    /* w2, w3 overlap with each others at least partially */
    leastSignifDigitIdx = nr - 1 - 2*bih;
-   for (i = 0; i< 2*bih+2; i++) {
+   for (i = 0; (unsigned int)i< 2*bih+2; i++) {
       Res[leastSignifDigitIdx - i] ^= w2[2*bih+2 - 1 - i];
    }
    leastSignifDigitIdx = nr - 1 - 3*bih;
-   for (i = 0; i< 2*bih+2 ; i++) {
+   for (i = 0; (unsigned int)i< 2*bih+2 ; i++) {
       Res[leastSignifDigitIdx - i] ^= w3[2*bih+2 - 1 - i];
    }
 }

@@ -49,7 +49,7 @@ void OQS_NAMESPACE_lift_mul_dense_to_sparse_CT(bs_operand_t bs_res[],
                                  unsigned int nPos)
 {
    SLICE_TYPE tmp[NUM_SLICES_GF2X_ELEMENT];
-   for(int i =0; i< nPos; i++) {
+   for(unsigned int i =0; i< nPos; i++) {
 #if (defined HIGH_PERFORMANCE_X86_64)
       /* note : last words of tmp will be intentionally garbage, in case
        * NUM_DIGITS_GF2X_ELEMENT is not divisible by 4, for alignment reasons
@@ -83,7 +83,7 @@ int OQS_NAMESPACE_bf_decoding_CT(DIGIT out[],
    DIGIT deltaerr[N0*NUM_DIGITS_GF2X_ELEMENT];
 #endif
 #if !(defined CONSTANT_TIME)
-   unsigned int synd_corrt_vec[][2]= {SYNDROME_TRESH_LOOKUP_TABLE};
+   unsigned int OQS_NAMESPACE_synd_corrt_vec[][2]= {SYNDROME_TRESH_LOOKUP_TABLE};
 #endif
 
 #if (defined DENSE_H)
@@ -107,17 +107,17 @@ int OQS_NAMESPACE_bf_decoding_CT(DIGIT out[],
       syndrome_wt = population_count(privateSyndrome);
       int min_idx=0;
       int max_idx;
-      max_idx = sizeof(synd_corrt_vec)/(2*sizeof(unsigned int)) - 1;
+      max_idx = sizeof(OQS_NAMESPACE_synd_corrt_vec)/(2*sizeof(unsigned int)) - 1;
       int thresh_table_idx = (min_idx + max_idx)/2;
       while(min_idx< max_idx) {
-         if (synd_corrt_vec[thresh_table_idx][0] <= syndrome_wt) {
+         if (OQS_NAMESPACE_synd_corrt_vec[thresh_table_idx][0] <= (unsigned int)syndrome_wt) {
             min_idx = thresh_table_idx +1;
          } else {
             max_idx = thresh_table_idx -1;
          }
          thresh_table_idx = (min_idx +max_idx)/2;
       }
-      int corrt_syndrome_based=synd_corrt_vec[thresh_table_idx][1];
+      int corrt_syndrome_based=OQS_NAMESPACE_synd_corrt_vec[thresh_table_idx][1];
       bs_operand_t sliced_threshold;
       uint16_t cut_neg_threshold = (uint16_t) (-corrt_syndrome_based);
       sliced_threshold = slice_constant(cut_neg_threshold);

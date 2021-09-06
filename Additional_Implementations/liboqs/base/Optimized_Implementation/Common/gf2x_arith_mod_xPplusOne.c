@@ -420,7 +420,7 @@ void OQS_NAMESPACE_rand_circulant_sparse_block(POSITION_T *pos_ones,
                          seed_expander_ctx);
       duplicated = 0;
       for (int j = 0; j < placedOnes; j++) {
-         if (pos_ones[j] == p) {
+         if (pos_ones[j] == (unsigned int) p) {
             duplicated = 1;
          }
       }
@@ -444,7 +444,7 @@ void OQS_NAMESPACE_rand_error_pos(POSITION_T errorPos[NUM_ERRORS_T],
                          seed_expander_ctx);
       duplicated = 0;
       for (int j = 0; j < counter; j++) {
-         if (errorPos[j] == p) {
+         if (errorPos[j] == (unsigned int) p) {
             duplicated = 1;
          }
       }
@@ -468,7 +468,7 @@ void OQS_NAMESPACE_rand_error_pos_shake(POSITION_T errorPos[NUM_ERRORS_T],
                                state);
       duplicated = 0;
       for (int j = 0; j < counter; j++) {
-         if (errorPos[j] == p) {
+         if (errorPos[j] == (unsigned int) p) {
             duplicated = 1;
          }
       }
@@ -613,7 +613,7 @@ void word_level_shift_VT(DIGIT *restrict shifted_param,
    /* condit-pull whole digits towards the MSB, starting from the
     *high_shift_amt - th  one, that is including the one which will have slack */
    {
-      int j = 0;
+      unsigned int j = 0;
       __m256i tmp;
       /*if there is enough material to have at least a full AVX2 reg to shift*/
       if(NUM_DIGITS_GF2X_ELEMENT-high_shift_amt >=4) {
@@ -845,7 +845,7 @@ void OQS_NAMESPACE_gf2x_mod_mul_dense_to_sparse(DIGIT Res[],
 {
 
    memset(Res,0,NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B);
-   for(int i = 0; i < nPos; i++) {
+   for(unsigned int i = 0; i < nPos; i++) {
       OQS_NAMESPACE_gf2x_mod_fmac(Res,sparse[i],dense);
    }
 }

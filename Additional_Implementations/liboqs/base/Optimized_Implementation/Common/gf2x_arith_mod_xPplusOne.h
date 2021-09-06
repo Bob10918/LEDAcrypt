@@ -293,7 +293,7 @@ void OQS_NAMESPACE_gf2x_mod_densify_CT(DIGIT dense[NUM_DIGITS_GF2X_ELEMENT],
                            (straightIdx % DIGIT_SIZE_b);
    }
 
-   for(int digit_to_set_idx=0; digit_to_set_idx < NUM_DIGITS_GF2X_ELEMENT;
+   for(unsigned int digit_to_set_idx=0; digit_to_set_idx < NUM_DIGITS_GF2X_ELEMENT;
          digit_to_set_idx++) {
       for(int i = 0; i < num_exponents; i++) {
          /*Note: this automatically deals with invalid positions which are
