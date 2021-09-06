@@ -96,10 +96,9 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
 
    unsigned char ss_input[2*TRNG_BYTE_LENGTH] = {0};
    memcpy(ss_input, seed, TRNG_BYTE_LENGTH);
-   HASH_FUNCTION((unsigned char *) ss,
-                 (const unsigned char *) ss_input, // input
-                 2*TRNG_BYTE_LENGTH                // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) ss_input, // input
+                 2*TRNG_BYTE_LENGTH,                // input Length
+                 (unsigned char *) ss);
 
    // in api.h CRYPTO_CIPHERTEXTBYTES is defined for KEMLT
    // as (NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B+TRNG_BYTE_LENGTH)
@@ -109,10 +108,9 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
 
    uint8_t hashedSeed[HASH_BYTE_LENGTH];
    uint8_t hashedAndTruncatedSeed[TRNG_BYTE_LENGTH] = {0};
-   HASH_FUNCTION((unsigned char *) hashedSeed,
-                 (const unsigned char *) seed,// input
-                 TRNG_BYTE_LENGTH             // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) seed,// input
+                 TRNG_BYTE_LENGTH,             // input Length
+                 (unsigned char *) hashedSeed);
 
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)
    memcpy(hashedAndTruncatedSeed, hashedSeed, TRNG_BYTE_LENGTH);
@@ -132,10 +130,9 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcca2(unsigned char *const
    expand_error(error_vector, errorPos);
 
    uint8_t hashedErrorVector[HASH_BYTE_LENGTH];
-   HASH_FUNCTION((unsigned char *) hashedErrorVector,
-                 (const unsigned char *) error_vector,      // input
-                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)  // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) error_vector,      // input
+                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),  // input Length
+                 (unsigned char *) hashedErrorVector);
 
    uint8_t hashedAndTruncaedErrorVector[TRNG_BYTE_LENGTH] = {0};
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)

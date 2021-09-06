@@ -81,7 +81,7 @@ int
 OQS_NAMESPACE_randombytes(unsigned char *x, unsigned long long xlen);
 
 /******  End of NIST supplied code ****************/
-#include "fips202.h"
+#include "sha3.h"
 
 void OQS_NAMESPACE_initialize_pseudo_random_generator_seed(int seedFixed, char *seed);
 
@@ -105,18 +105,17 @@ int OQS_NAMESPACE_rand_range(const int n, const int logn, AES_XOF_struct *seed_e
 
 typedef
 struct xof_shake {
+    Keccak_HashInstance state;
 #if SHAKE_FUNCTION == shake_128
 #define SHAKE_BUFFER_LENGTH (168)
-    shake128incctx state;
 #elif SHAKE_FUNCTION == shake_256
-    #define SHAKE_BUFFER_LENGTH (136)
-    shake256incctx state;
+#define SHAKE_BUFFER_LENGTH (136)
 #else
 #error "SHAKE FUNCTION SELECTION FAILED !"
 #endif
-   unsigned char buffer[SHAKE_BUFFER_LENGTH];
-   int last_filled_byte_idx;
-   int idx;
+    unsigned char buffer[SHAKE_BUFFER_LENGTH];
+    int last_filled_byte_idx;
+    int idx;
 } xof_shake_t;
 
 

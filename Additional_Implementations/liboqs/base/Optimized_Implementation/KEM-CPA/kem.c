@@ -32,7 +32,7 @@
 #include "niederreiter_encrypt.h"
 #include "niederreiter_decrypt.h"
 #include "rng.h"
-#include "fips202.h"
+#include "sha3.h"
 #include <string.h>
 #include <stdio.h>
 

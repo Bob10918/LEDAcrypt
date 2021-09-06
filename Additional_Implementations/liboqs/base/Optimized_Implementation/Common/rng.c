@@ -141,7 +141,7 @@ OQS_NAMESPACE_seedexpander(AES_XOF_struct *ctx, unsigned char *x, unsigned long 
 
    offset = 0;
    while ( xlen > 0 ) {
-      if ( xlen <= (16-ctx->buffer_pos) ) { // buffer has what we need
+      if ( xlen <= (unsigned long)(16-ctx->buffer_pos) ) { // buffer has what we need
          memcpy(x+offset, ctx->buffer+ctx->buffer_pos, xlen);
          ctx->buffer_pos += xlen;
 
@@ -358,7 +358,7 @@ int OQS_NAMESPACE_rand_range(const int n, const int logn, AES_XOF_struct *seed_e
                    ((uint32_t)rnd_char_buffer[1] <<  8) +
                    ((uint32_t)rnd_char_buffer[0] <<  0) ;
       rnd_value = mask & rnd_value;
-   } while (rnd_value >= n);
+   } while (rnd_value >= (unsigned int)n);
 
    return rnd_value;
 } // end OQS_NAMESPACE_rand_range
@@ -369,27 +369,26 @@ void OQS_NAMESPACE_shake_seedexpander_init(xof_shake_t *st,
 {
     memset(st, 0x00, sizeof(xof_shake_t));
 #if SHAKE_FUNCTION == shake_128
-    shake128_inc_init(&(st->state));
-    shake128_inc_absorb(&(st->state),
-                        (const uint8_t *) trng_entropy,
-                        (size_t) (TRNG_BYTE_LENGTH*8)
-    );
-    shake128_inc_finalize(&(st->state)
-    );
+    Keccak_HashInitialize_SHAKE128(&(st->state));
+#elif SHAKE_FUNCTION == shake_256
+    Keccak_HashInitialize_SHAKE256(&(st->state));
+#else
+#error "SHAKE FUNCTION SELECTION FAILED !"
+#endif
+    Keccak_HashUpdate(&(st->state),
+                      (const BitSequence *) trng_entropy,
+                      (BitLength) (TRNG_BYTE_LENGTH*8)
+                      );
+    Keccak_HashFinal(&(st->state),
+                     (BitSequence *) (st->buffer)
+                     );
+#if SHAKE_FUNCTION == shake_128
     st->last_filled_byte_idx = 15;
 #elif SHAKE_FUNCTION == shake_256
-    shake256_inc_init(&(st->state));
-    shake256_inc_absorb(&(st->state),
-                     (const uint8_t *) trng_entropy,
-                     (size_t) (TRNG_BYTE_LENGTH*8)
-                    );
-    shake256_inc_finalize(&(st->state)
-                   );
     st->last_filled_byte_idx = 31;
 #else
 #error "SHAKE FUNCTION SELECTION FAILED !"
 #endif
-
     st->idx = 0;
 } // end OQS_NAMESPACE_shake_seedexpander_init
 
@@ -407,19 +406,10 @@ void OQS_NAMESPACE_shake_seedexpander_extract(xof_shake_t *st,
         outIdx += 1;
     } // end for
     while (remaining_bytes_to_output > 0) {
-#if SHAKE_FUNCTION == shake_128
-        shake128_inc_squeeze((st->buffer),
-                             (size_t) (SHAKE_BUFFER_LENGTH*8),
-                             &(st->state)
-        );
-#elif SHAKE_FUNCTION == shake_256
-        shake256_inc_squeeze((st->buffer),
-                         (size_t) (SHAKE_BUFFER_LENGTH*8),
-                         &(st->state)
-                        );
-#else
-#error "SHAKE FUNCTION SELECTION FAILED !"
-#endif
+        Keccak_HashSqueeze(&(st->state),
+                           (BitSequence *) (st->buffer),
+                           (BitLength) (SHAKE_BUFFER_LENGTH*8)
+                           );
         st->last_filled_byte_idx = SHAKE_BUFFER_LENGTH-1;
         st->idx = 0;
         for ( ; st->idx <= st->last_filled_byte_idx &&
@@ -448,7 +438,7 @@ int OQS_NAMESPACE_rand_range_shake(const int n, const int logn, xof_shake_t *st)
                    ((uint32_t)rnd_char_buffer[1] <<  8) +
                    ((uint32_t)rnd_char_buffer[0] <<  0) ;
       rnd_value = mask & rnd_value;
-   } while (rnd_value >= n);
+   } while (rnd_value >= (unsigned int)n);
 
    return rnd_value;
 } // end OQS_NAMESPACE_rand_range_shake

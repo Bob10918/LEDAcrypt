@@ -37,7 +37,7 @@
 #include "bf_decoding.h"
 #include "dfr_test.h"
 #include "rng.h"
-#include "fips202.h"
+#include "sha3.h"
 #include <string.h>
 
 extern int OQS_NAMESPACE_thresholds[2];
@@ -126,10 +126,9 @@ void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
    // this call to decrypt_niederreiter(....) is ok!
 
    uint8_t hashedErrorVector[HASH_BYTE_LENGTH];
-   HASH_FUNCTION((unsigned char *) hashedErrorVector,
-                 (const unsigned char *) decoded_error_vector, // input
-                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B)     // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) decoded_error_vector, // input
+                 (N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B),     // input Length
+                 (unsigned char *) hashedErrorVector);
 
    uint8_t hashedAndTruncaedErrorVector[TRNG_BYTE_LENGTH] = {0};
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)
@@ -146,10 +145,9 @@ void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
 
    uint8_t hashed_decoded_seed[HASH_BYTE_LENGTH];
    uint8_t hashedAndTruncaed_decoded_seed[TRNG_BYTE_LENGTH] = {0};
-   HASH_FUNCTION((unsigned char *) hashed_decoded_seed,
-                 (const unsigned char *) decoded_seed,// input
-                 TRNG_BYTE_LENGTH                     // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) decoded_seed,// input
+                 TRNG_BYTE_LENGTH,                     // input Length
+                 (unsigned char *) hashed_decoded_seed);
 
 #if (TRNG_BYTE_LENGTH <= HASH_BYTE_LENGTH)
    memcpy(hashedAndTruncaed_decoded_seed,
@@ -195,9 +193,8 @@ void OQS_NAMESPACE_decrypt_niederreiter_indcca2(unsigned char *const ss,
              TRNG_BYTE_LENGTH);
    }
 
-   HASH_FUNCTION((unsigned char *) ss,
-                 (const unsigned char *) ss_input, // input
-                 2*TRNG_BYTE_LENGTH                // input Length
-                 );
+   HASH_FUNCTION((const unsigned char *) ss_input, // input
+                 2*TRNG_BYTE_LENGTH,                // input Length
+                 (unsigned char *) ss);
 
 } // end OQS_NAMESPACE_decrypt_niederreiter_indcca2

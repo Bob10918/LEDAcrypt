@@ -32,7 +32,7 @@
 #include "qc_ldpc_parameters.h"
 #include "gf2x_arith_mod_xPplusOne.h"
 #include "rng.h"
-#include "fips202.h"
+#include "sha3.h"
 #include <string.h> // memset(...)
 
 static
@@ -41,7 +41,7 @@ void encrypt_niederreiter(DIGIT syndrome[],                // 1  polynomial
                           const POSITION_T errorPos[NUM_ERRORS_T], // positions of asserted bits
                           const DIGIT err[])
 {
-   int i;
+   unsigned int i;
    DIGIT saux[NUM_DIGITS_GF2X_ELEMENT];
    unsigned int filled;
    memset(syndrome, 0x00, NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B);
@@ -91,10 +91,9 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const
    error_vector[0] = 0x00;
    expand_error( ( (DIGIT *)(&error_vector[1]) ), errorPos);
 
-   HASH_FUNCTION(ss,
-                 (unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
-                 );
+   HASH_FUNCTION((unsigned char *) error_vector,        // input
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 ss);
 
    encrypt_niederreiter((DIGIT *) ct,
                         pk,
@@ -102,10 +101,9 @@ void OQS_NAMESPACE_encrypt_niederreiter_indcpa(unsigned char *const
                         ((const DIGIT * const) (&error_vector[1])));
    unsigned char tagMask[HASH_BYTE_LENGTH];
    error_vector[0] = 0x01;
-   HASH_FUNCTION(tagMask,
-                 (unsigned char *) error_vector,        // input
-                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B) // input Length
-                 );
+   HASH_FUNCTION((unsigned char *) error_vector,        // input
+                 (1+N0*NUM_DIGITS_GF2X_ELEMENT*DIGIT_SIZE_B), // input Length
+                 tagMask);
 
    for (int i = 0; i < TRNG_BYTE_LENGTH; ++i) {
       tag[i] = err_vect_seed[i] ^ tagMask[i];
