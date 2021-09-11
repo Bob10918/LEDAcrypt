@@ -16,7 +16,7 @@ OQS_KEM *OQS_KEM_GENERATOR_SCHEME_NAME_new() {
 	kem->alg_version = "https://github.com/Bob10918/LEDAcrypt/commit/b176d7c6821700f5124f591b50ccae9d5f25ee91";
 
 	kem->claimed_nist_level = GENERATOR_NIST_LEVEL;
-	kem->ind_cca = true;
+	kem->ind_cca = GENERATOR_IND_CCA;
 
 	kem->length_public_key = OQS_KEM_GENERATOR_SCHEME_NAME_length_public_key;
 	kem->length_secret_key = OQS_KEM_GENERATOR_SCHEME_NAME_length_secret_key;

@@ -53,7 +53,7 @@ for param in params:
     shutil.copyfile(f"base/ledacrypt.c", f"{TARGET_FOLDER}/kem_{parameterSet}.c")
     clean_nmspc = (f"OQS_KEM_{parameterSet.upper().replace('-','')}_CLEAN")
     avx_nmspc = clean_nmspc.replace('_CLEAN', '_AVX2')
-    cmd = f"sed -i 's/OQS_NAMESPACE/{clean_nmspc}/g; s/OQS_AVX_NAMESPACE/{avx_nmspc}/g; s/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g' {TARGET_FOLDER}/kem_{parameterSet}.c"
+    cmd = f"sed -i 's/OQS_NAMESPACE/{clean_nmspc}/g; s/OQS_AVX_NAMESPACE/{avx_nmspc}/g; s/GENERATOR_SCHEME_NAME/{parameterSet}/g; s/GENERATOR_NIST_LEVEL/{param['values']['GENERATOR_NIST_LEVEL']}/g; s/GENERATOR_IND_CCA/{param['values']['GENERATOR_IND_CCA']}/g' {TARGET_FOLDER}/kem_{parameterSet}.c"
     subprocess.call(cmd, shell=True)
 
 
